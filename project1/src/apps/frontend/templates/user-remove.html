@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block styles %}
+{% endblock %}
+
+
+{% block header %}
+    <a href="{% url 'users' %}"> <i class="material-icons left">undo</i>Назад</a>
+{% endblock %}
+
+{% block main %}
+    <form method="post" action="{% url 'user_remove' user_id=user_id %}" id="form">
+        Удалить пользователя?
+        {% csrf_token %}
+
+        <button class="btn waves-effect waves-light pink darken-1" type="submit">Удалить
+            <i class="material-icons right">not_interested</i>
+        </button>
+
+        <button class="btn waves-effect waves-light grey"
+                onclick="location='{% url 'users' %}'">
+            Отмена
+        </button>
+
+    </form>
+{% endblock %}
+

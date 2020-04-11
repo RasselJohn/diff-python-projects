@@ -1,4 +1,4 @@
-Test project
+Test project #3
 =================
 
 - Create virtual environment
@@ -17,7 +17,7 @@ Task:
 ---------------
 Create web application for simple checking visits of links.
 Conditions:
-• `Python ~> 3.7`.
+• Python ~> 3.7.
 • Application provides JSON API.
 • App has 2 resources(api-urls).
 • First resources gets POST query with array of visited links and saves it. Time of visit is getting data by server.

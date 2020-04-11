@@ -1,0 +1,66 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head lang="ru">
+    <meta charset="utf-8">
+
+    <title>Main page</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <link rel="stylesheet" href="{% static 'assets/css/icon.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/materialize.min.css' %}">
+    <link rel="stylesheet" href="{% static 'public/css/main.css' %}">
+
+
+    {% block styles %}{% endblock %}
+
+</head>
+
+<body>
+<nav>
+    <div class="nav-wrapper teal lighten-2">
+        <a href="" class="brand-logo ">Project</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down ">
+            {% block header %}{% endblock %}
+        </ul>
+    </div>
+</nav>
+
+<div class="main-block">
+
+    <div class="center-block">
+        <div class="center-block-content">
+            {% block main %}{% endblock %}
+        </div>
+    </div>
+
+</div>
+
+
+<!-- Modal Trigger -->
+<a class="waves-effect waves-light btn modal-trigger" href="#modal1" id="modalOpenButton">Modal</a>
+
+<!-- Modal Structure -->
+<div id="modal1" class="modal">
+    <div class="modal-content">
+        <h4>Уведомление системы</h4>
+        <p id="modalMessage">Неизвестная ошибка!</p>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">OK</a>
+    </div>
+</div>
+
+<!-- Compiled and minified JavaScript -->
+
+<script src="{% static 'assets/js/materialize.min.js' %}"></script>
+<script src="{% static 'public/js/main.js' %}"></script>
+
+{% block scripts %}{% endblock %}
+
+</body>
+
+
+</html>
