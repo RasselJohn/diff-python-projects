@@ -3,20 +3,20 @@ Test project
 
 - Create virtual environment
 - Create dir 'logs' (path is `LOG_DIR` in `settings.py`)
-- Run `Redis`(default settings):
-- For handle checking:
+- Run `Redis`(default settings):  
+- For handle checking:  
 ```
 python manage.py runserver
 ```
-- For tests (Redis must be running):
+- For tests (Redis must be running):  
 ```
 python manage.py test
 ```
 
 Task:
 ---------------
-Create web application for simple checking visits of links.
-Conditions:
+Create web application for simple checking visits of links.  
+Conditions:  
 • `Python ~> 3.7`.  
 • Application provides JSON API.  
 • App has 2 resources(api-urls).  
