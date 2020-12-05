@@ -5,7 +5,7 @@
 <head lang="ru">
     <meta charset="utf-8">
 
-    <title>Main page</title>
+    <title>Project</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
@@ -21,31 +21,21 @@
 <body>
 <nav>
     <div class="nav-wrapper teal lighten-2">
-        <a href="" class="brand-logo ">Project</a>
+        <a href="" class="brand-logo center">Project</a>
         <ul id="nav-mobile" class="right hide-on-med-and-down ">
             {% block header %}{% endblock %}
         </ul>
     </div>
 </nav>
 
-<div class="main-block">
 
-    <div class="center-block">
-        <div class="center-block-content">
-            {% block main %}{% endblock %}
-        </div>
-    </div>
+{% block main %}{% endblock %}
 
-</div>
-
-
-<!-- Modal Trigger -->
-<a class="waves-effect waves-light btn modal-trigger" href="#modal1" id="modalOpenButton">Modal</a>
 
 <!-- Modal Structure -->
 <div id="modal1" class="modal">
     <div class="modal-content">
-        <h4>Уведомление системы</h4>
+        <h4>Уведомление</h4>
         <p id="modalMessage">Неизвестная ошибка!</p>
     </div>
     <div class="modal-footer">

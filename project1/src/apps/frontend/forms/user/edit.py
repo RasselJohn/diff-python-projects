@@ -3,24 +3,22 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 
-from src.apps.frontend.utils import is_valid_password
+from src.apps.frontend.utils import is_valid_password, check_exist_email, check_exist_username
 
 
 class UserEditForm(forms.Form):
-    first_name = forms.CharField(max_length=100, label=_('Имя'),
-                                 error_messages={'required': _('Имя не задано.')})
+    first_name = forms.CharField(max_length=100, label=_('Имя'), required=False, )
 
-    last_name = forms.CharField(max_length=200, label=_('Фамилия'),
-                                error_messages={'required': _('Фамилия не задана.')})
+    last_name = forms.CharField(max_length=200, label=_('Фамилия'), required=False, )
 
     username = forms.CharField(
-        label=_('Логин'),
-        error_messages={'required': _('Логин не задан.'), 'invalid': _('Логин некорректен.')}
+        label=_('Логин'), error_messages={'invalid': _('Логин некорректен.')},
+        required=False, validators=[check_exist_username]
     )
 
     email = forms.EmailField(
-        label=_('Email'),
-        error_messages={'required': _('Email не задан.'), 'invalid': _('Email некорректен.')}
+        label=_('Email'), error_messages={'invalid': _('Email некорректен.')},
+        required=False, validators=[check_exist_email]
     )
 
     password = forms.CharField(max_length=20, label=_('Пароль'), required=False)
@@ -33,16 +31,17 @@ class UserEditForm(forms.Form):
         super(UserEditForm, self).__init__(*args, **kwargs)
         self.user = user
 
-    def edit_user(self):
-        user = self.user
-        email = self.cleaned_data.get('email').lower()
-        if email != user.email:
-            user.email = email
+    def clean(self):
+        password: str = self.cleaned_data.get('password')
+        password_repeat = self.cleaned_data.get('password_repeat')
 
-        username = self.cleaned_data.get('username')
-        if username != user.username:
-            user.username = username
+        if not is_valid_password(password, password_repeat):
+            raise ValidationError(_('Пароли некорректны или не совпадают.'), code='invalid')
 
+        return self.cleaned_data
+
+    def edit_user(self) -> None:
+        user: User = self.user
         user.first_name = self.cleaned_data.get('first_name')
         user.last_name = self.cleaned_data.get('last_name')
         user.is_staff = self.cleaned_data.get('is_staff', False)
@@ -52,33 +51,3 @@ class UserEditForm(forms.Form):
             user.set_password(password)
 
         user.save()
-
-    def clean(self):
-        password = self.cleaned_data.get('password')
-        if not password:
-            return self.cleaned_data
-
-        password_repeat = self.cleaned_data.get('password_repeat')
-
-        if not is_valid_password(password, password_repeat):
-            raise ValidationError(_('Пароли некорректны или не совпадают.'), code='invalid')
-
-        return self.cleaned_data
-
-    def clean_email(self):
-        email = self.cleaned_data.get('email')
-        if User.objects.filter(email=email).exclude(pk=self.user.pk).exists():
-            raise ValidationError(
-                _('Указанный Email уже зарегистрирован в системе.'), code='duplicate'
-            )
-
-        return email
-
-    def clean_username(self):
-        username = self.cleaned_data.get('username')
-        if User.objects.filter(username=username).exclude(pk=self.user.pk).exists():
-            raise ValidationError(
-                _('Указанный логин уже зарегистрирован в системе.'), code='duplicate'
-            )
-
-        return username

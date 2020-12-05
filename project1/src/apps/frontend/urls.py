@@ -11,8 +11,6 @@ urlpatterns = [
 
     path(r'users/', user_only_request(user.UserListView.as_view()), name='users'),
     path(r'user/add/', staff_only_request(user.UserAddView.as_view()), name='user_add'),
-    path(r'user/edit/<str:user_id>/', staff_only_request(user.UserEditView.as_view()),
-         name='user_edit'),
-    path(r'user/remove/<str:user_id>/', staff_only_request(user.UserRemoveView.as_view()),
-         name='user_remove'),
+    path(r'user/edit/<str:user_id>/', staff_only_request(user.UserEditView.as_view()), name='user_edit'),
+    path(r'user/remove/<str:user_id>/', staff_only_request(user.UserRemoveView.as_view()), name='user_remove'),
 ]
