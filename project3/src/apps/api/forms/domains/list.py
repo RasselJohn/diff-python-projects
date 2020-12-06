@@ -1,5 +1,6 @@
 import logging
 from traceback import format_exc
+from typing import Optional
 
 import redis
 from django import forms
@@ -22,18 +23,18 @@ class DomainsListForm(forms.Form):
         error_messages={'required': _('Конечный период не задан.'), 'invalid': _('Конечный период некорректен.')}
     )
 
-    def clean(self):
-        cleaned_data = super(DomainsListForm, self).clean()
+    def clean(self) -> dict:
+        cleaned_data: dict = super(DomainsListForm, self).clean()
 
         # if 'date_from' and 'date_to' do not exist - base 'clean' method checked it and raises the errors later.
-        date_from = cleaned_data.get('date_from')
-        date_to = cleaned_data.get('date_to')
+        date_from: int = cleaned_data.get('date_from')
+        date_to: int = cleaned_data.get('date_to')
         if date_to and date_from and cleaned_data.get('date_to') < cleaned_data.get('date_from'):
             raise forms.ValidationError(_('Конечный период не может быть меньше начального.'))
 
         return cleaned_data
 
-    def get_domains(self):
+    def get_domains(self) -> Optional[set]:
         date_from = self.cleaned_data.get('date_from')
         date_to = self.cleaned_data.get('date_to')
 

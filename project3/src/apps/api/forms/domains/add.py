@@ -22,14 +22,14 @@ class DomainsAddForm(forms.Form):
     )
 
     def save_urls(self):
-        links = self.cleaned_data.get('links')
+        links: list = self.cleaned_data.get('links')
 
         try:
-            timestamp = math.floor(timezone.now().timestamp())
+            timestamp: float = math.floor(timezone.now().timestamp())
             unique_domains = self.collect_unique_domains(links)
 
             redis_client = redis.Redis(**settings.REDIS_CONFIG)
-            curr_id = redis_client.incr('curr_id')
+            curr_id: int = redis_client.incr('curr_id')
             urls = {index: domain for index, domain in enumerate(unique_domains, start=curr_id)}
 
             # set curr_id for next saving in 'sites' hash table
@@ -48,11 +48,12 @@ class DomainsAddForm(forms.Form):
         return timestamp
 
     @classmethod
-    def collect_unique_domains(cls, urls):
+    def collect_unique_domains(cls, urls: list) -> set:
         unique_urls = set()
 
         for url in urls:
-            url = get_base_domain(url)
+            url: str = get_base_domain(url)
+
             if url:
                 unique_urls.add(url)
 
