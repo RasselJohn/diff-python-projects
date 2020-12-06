@@ -1,22 +1,24 @@
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+from django.forms import Form
 from django.utils.translation import ugettext_lazy as _
 
 
-def get_form_errors(form) -> dict:
+def get_form_errors(form: Form) -> dict:
     errors_list = [''.join(e) for e in form.errors.values()]
     return {'error': ''.join(errors_list)}
 
 
-def is_valid_password(password, password_repeat) -> bool:
-    return password and password_repeat and password == password_repeat
+def is_valid_password(password: str, password_repeat: str) -> None:
+    if not password or not password_repeat or password != password_repeat:
+        raise ValidationError(_('Пароли некорректны или несовпадают.'), code='invalid')
 
 
-def check_exist_email(email) -> None:
+def check_exist_email(email: str) -> None:
     if User.objects.filter(email__icontains=email).exists():
-        raise ValidationError(_('Указанный Email уже зарегистрирован в системе.'), code='duplicate')
+        raise ValidationError(_('Указанный email уже зарегистрирован в системе.'), code='duplicate')
 
 
-def check_exist_username(username) -> None:
+def check_exist_username(username: str) -> None:
     if User.objects.filter(username__icontains=username).exists():
-        raise ValidationError(_('Указанный Email уже зарегистрирован в системе.'), code='duplicate')
+        raise ValidationError(_('Указанный логин уже зарегистрирован в системе.'), code='duplicate')

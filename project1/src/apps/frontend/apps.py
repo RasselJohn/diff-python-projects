@@ -6,5 +6,5 @@ class FrontendConfig(AppConfig):
     name = 'src.apps.frontend'
     label = 'frontend'
 
-    def ready(self):
+    def ready(self) -> None:
         self.verbose_name = _('Фронтенд')

@@ -69,7 +69,7 @@ DATABASES = {
         'NAME': 'project',
         'USER': 'project',
         'PASSWORD': 'project',
-        'HOST': '127.0.0.1',
+        'HOST': 'postgres',
         'PORT': '5432',
     }
 }
@@ -92,66 +92,3 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(PROJECT_ROOT, "static"),
 ]
-
-STATIC_ROOT = os.path.join("/", "srv", "project", "public", 'static')
-
-MEDIA_URL = '/media/'
-
-# Only for production
-MEDIA_ROOT = os.path.join("..", "..", "media")
-
-LOG_DIR = os.path.join("..", "..", "logs")
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'filters': {
-    },
-    'formatters': {
-        'verbose': {
-            'format': '%(asctime)s; %(process)d; %(thread)d; %(levelname)s; %(module)s; %(message)s'
-        },
-        'simple': {
-            'format': '%(asctime)s; %(levelname)s; %(module)s; %(message)s'
-        },
-    },
-    'handlers': {
-        'error.log': {
-            'level': 'ERROR',
-            'formatter': 'verbose',
-            'class': 'logging.FileHandler',
-            'filename': os.path.join(LOG_DIR, 'error.log')
-        },
-        'debug.log': {
-            'level': 'DEBUG',
-            'formatter': 'verbose',
-            'class': 'logging.FileHandler',
-            'filename': os.path.join(LOG_DIR, 'debug.log')
-        },
-
-        'command_error.log': {
-            'level': 'ERROR',
-            'formatter': 'verbose',
-            'class': 'logging.FileHandler',
-            'filename': os.path.join(LOG_DIR, 'command_error.log')
-        },
-        'command_debug.log': {
-            'level': 'DEBUG',
-            'formatter': 'verbose',
-            'class': 'logging.FileHandler',
-            'filename': os.path.join(LOG_DIR, 'command_debug.log')
-        },
-    },
-    'loggers': {
-        'django.request': {
-            'handlers': ['error.log', 'debug.log'],
-            'level': 'DEBUG',
-            'propagate': True,
-        },
-        'django.command': {
-            'handlers': ['command_error.log', 'command_debug.log'],
-            'level': 'DEBUG',
-            'propagate': True,
-        },
-    },
-}
