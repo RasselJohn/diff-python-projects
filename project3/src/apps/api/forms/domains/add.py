@@ -1,6 +1,7 @@
 import logging
 import math
 from traceback import format_exc
+from typing import Optional
 
 import redis
 from django import forms
@@ -21,14 +22,14 @@ class DomainsAddForm(forms.Form):
         error_messages={'required': _('Список урлов не задан.'), 'invalid': _('Список урлов некорректен.')}
     )
 
-    def save_urls(self):
+    def save_urls(self) -> Optional[int]:
         links: list = self.cleaned_data.get('links')
 
         try:
-            timestamp: float = math.floor(timezone.now().timestamp())
+            timestamp: int = math.floor(timezone.now().timestamp())
             unique_domains = self.collect_unique_domains(links)
 
-            redis_client = redis.Redis(**settings.REDIS_CONFIG)
+            redis_client = redis.Redis(host=settings.REDIS_HOST, **settings.REDIS_CONFIG)
             curr_id: int = redis_client.incr('curr_id')
             urls = {index: domain for index, domain in enumerate(unique_domains, start=curr_id)}
 

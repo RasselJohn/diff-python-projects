@@ -2,7 +2,7 @@ from django.test import SimpleTestCase, Client
 
 
 class TestDomainBaseView(SimpleTestCase):
-    url = None  # need to override in derived classes
+    url = ''  # need to override in derived classes
     content_type = "application/json"
     client = Client()
     test_links = {"links": [

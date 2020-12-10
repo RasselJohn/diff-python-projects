@@ -1,0 +1,17 @@
+POST http://localhost:8000/api/visited-links/
+Content-Type: application/json
+
+{
+  "links": [
+    "https://ya.ru",
+    "https://ya.ru?q=123",
+    "qwe123.ru",
+    "https://stackoverflow.com/questions/11828270/how-to-exit-the-vim-editor"
+  ]
+}
+
+###
+# date_from can be taken from api/visited-links/ (param 'timestamp')
+# date_to - just add some seconds to date_from
+GET http://localhost:8000/api/visited-domains/?date_from=1607606600&date_to=1607606600
+Content-Type: application/json

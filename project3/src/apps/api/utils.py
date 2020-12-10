@@ -1,14 +1,19 @@
-def get_form_errors(form):
+from typing import Optional
+
+from django.forms import Form
+
+
+def get_form_errors(form: Form) -> dict:
     errors_list = [''.join(e) for e in form.errors.values()]
     return {'status': ";".join(errors_list)}
 
 
-def get_base_domain(url):
+def get_base_domain(url: str) -> Optional[str]:
     # Standard python urlparse package does not work correctly.
     if not url or '.' not in url:
         return None
 
-    base_url = url.lower()
+    base_url: str = url.lower()
 
     # remove protocol
     if '://' in base_url:

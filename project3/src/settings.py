@@ -9,7 +9,7 @@ PROJECT_ROOT = os.path.dirname(BASE_DIR)
 SECRET_KEY = 'qweqweqwe'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', True)
 
 ALLOWED_HOSTS = ['*']
 
@@ -25,15 +25,15 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
 ]
 
+REDIS_HOST = os.environ.get('REDIS_HOST', '127.0.0.1')
+
 REDIS_CONFIG = {
-    'host': 'localhost',
     'port': 6379,
     'db': 0,
     'decode_responses': True
 }
 
 TEST_REDIS_CONFIG = {
-    'host': 'localhost',
     'port': 6379,
     'db': 10,
     'decode_responses': True

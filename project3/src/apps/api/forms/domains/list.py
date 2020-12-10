@@ -35,13 +35,13 @@ class DomainsListForm(forms.Form):
         return cleaned_data
 
     def get_domains(self) -> Optional[set]:
-        date_from = self.cleaned_data.get('date_from')
-        date_to = self.cleaned_data.get('date_to')
+        date_from: int = self.cleaned_data.get('date_from')
+        date_to: int = self.cleaned_data.get('date_to')
 
         try:
-            redis_client = redis.Redis(**settings.REDIS_CONFIG)
-            sites_pk = redis_client.zrangebyscore('timestamps', date_from, date_to)
-            urls = redis_client.hmget('sites', sites_pk)
+            redis_client = redis.Redis(host=settings.REDIS_HOST, **settings.REDIS_CONFIG)
+            sites_pk: set = redis_client.zrangebyscore('timestamps', date_from, date_to)
+            urls: list = redis_client.hmget('sites', sites_pk)
         except Exception:
             log.error(f'Error: {format_exc()}')
             return None
