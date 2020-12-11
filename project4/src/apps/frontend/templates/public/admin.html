@@ -1,0 +1,58 @@
+{% extends 'public/base.html' %}
+
+{% load static %}
+
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/dark.css">
+{% endblock %}
+
+{% block main %}
+    <div class="container" id="admin" v-cloak>
+        <div class="row">
+            <div class="col s12 m8 offset-m2 l6 offset-l3">
+                <div class="card-panel grey lighten-5 z-depth-1">
+                    <div class="row valign-wrapper">
+                        <div class="col s12">
+                            <form>
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <input type="text" v-model="newRate" id="newRate"
+                                               class="validate">
+                                        <label for="newRate">Новый курс</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <input type="text" id="flatPick"/>
+                                        <label>Действует до</label>
+                                    </div>
+                                </div>
+                                <button @click.prevent="onChangeRate">Применить</button>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <div class="card-panel grey lighten-5 z-depth-1">
+                    <div class="row valign-wrapper">
+                        <div class="col s12">
+                            Предыдущие значения:
+                            {% verbatim %}{{ adminCurrencies }}{% endverbatim %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="{% static 'public/js/admin.js' %}"></script>
+{% endblock %}
