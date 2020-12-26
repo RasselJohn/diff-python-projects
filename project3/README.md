@@ -1,6 +1,8 @@
 Test project #3
 =================
-**Django + Redis + Docker**
+Language: **Python**  
+Tools: **Django Framework, Redis, Docker**
+
 
 For **handle** running:
 - Create directory `logs` (path is `LOG_DIR` in `settings.py`)

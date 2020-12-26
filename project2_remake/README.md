@@ -1,5 +1,8 @@
 Test project #2 REMAKE
 =================
+Language: **Python**  
+Tools: **Aiohttp Framework, Docker**
+
 Project is on **Aiohttp+Docker**.  
 Now data is loaded from current server (3 requests) with waiting period 2 seconds.  
 For checking: run server.py in console and **open in browser by address(!) http://localhost:8080**.  

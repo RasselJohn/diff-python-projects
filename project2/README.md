@@ -1,6 +1,7 @@
 Test project #2
 =================
-**Django + Django Channel + JS + Docker**.
+Languages: **Python, JS**  
+Tools: **Django Framework, Django Channel, Docker**
 
 Task resolved through 3 generators.
 They are called in **async loop** and every returns by an element (print in console)

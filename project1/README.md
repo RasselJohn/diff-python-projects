@@ -1,6 +1,7 @@
 Test project #1
 =================
-Project is on Django.
+Languages: **Python, JS**  
+Tools: **Django Framework, Docker**
 
 Task:
 ---------------

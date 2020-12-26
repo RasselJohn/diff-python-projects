@@ -1,0 +1,14 @@
+### Recieve for concrete date
+GET http://localhost:8080/day?city=Sidney&date=2020-12-18
+Content-Type: application/json
+
+### Recieve for concrete date(error)
+GET http://localhost:8080/day?city=&date=
+Content-Type: application/json
+
+### Recieve for week date
+GET http://localhost:8080/week?city=Sidney
+Content-Type: application/json
+
+### Test weather api
+GET https://api.weatherapi.com/v1/forecast.json?key=<API_KEY>&q=Sidney&days=5&lang=ru
