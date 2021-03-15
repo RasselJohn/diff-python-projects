@@ -13,11 +13,8 @@ async def test_entity_list_success(
         auth_token_fx: dict
 ) -> NoReturn:
     login: str = user_fx.get('login')
-    # at first delete all data
-    db_fx[DbCollection.ENTITY].delete_many({})
-
     db_fx[DbCollection.ENTITY].insert_many(
-        [{'login': login, 'data': {'data1': 123, 'data2': 'qwe'}} for i in range(3)]
+        [{'login': login, 'data': {'data1': 123, 'data2': 'qwe'}} for _ in range(3)]
     )
 
     response: Response = await aiohttp_client_fx.get(
@@ -30,6 +27,3 @@ async def test_entity_list_success(
     data: dict = await response.json()
     assert 'entities' in data
     assert len(data.get('entities')) == 3
-
-    # delete all data again for other tests
-    db_fx[DbCollection.ENTITY].delete_many({'login': login})

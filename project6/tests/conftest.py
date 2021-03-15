@@ -15,7 +15,7 @@ from src.middlewares import check_login
 from src.urls import urls
 
 
-@pytest.fixture(scope="session", autouse=True)
+@pytest.fixture  # (scope="session", autouse=True)
 def db_fx() -> database.Database:
     client = MongoClient(environ.get('MONGO_HOST', 'localhost'), int(environ.get('MONGO_PORT', 27017)))
     client.drop_database('MainDb_test')
