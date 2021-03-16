@@ -13,5 +13,5 @@ urls = [
 
     # link
     web.post('/link/generate', link.GenerateLinkView, name='link-generate'),
-    web.get('/link/receive/', link.ReceiveLinkView, name='link-receive'),
+    web.get('/link/receive', link.ReceiveLinkView, name='link-receive'),
 ]

@@ -1,4 +1,6 @@
+from bson import ObjectId
 from http import HTTPStatus
+from typing import Optional
 
 from aiohttp import web
 from pymongo.collection import Collection
@@ -10,23 +12,30 @@ from src.utils import require_auth
 class ReceiveLinkView(web.View):
     @require_auth
     async def get(self) -> web.Response:
-        data = await self.request.json()
-        link_id = data.get('link_id')
+        link_id: Optional[str] = self.request.query.get('link_id')
         if not link_id:
-            pass
-        new_owner = self.request.user.get('login')
-        links: Collection = self.request.app.get('MONGO_DB')[DbCollection.LINK]
-        item = links.find_one({'new_owner': new_owner, '_id': link_id})
-        if not item:
-            pass
+            return web.json_response(
+                data={'error': f'Param link_id is absent.'},
+                status=HTTPStatus.BAD_REQUEST
+            )
 
+        new_owner: str = self.request.user.get('login')
+        links: Collection = self.request.app.get('MONGO_DB')[DbCollection.LINK]
+        link = links.find_one({'new_owner': new_owner, '_id': ObjectId(link_id)})
+        if not link:
+            return web.json_response(
+                {'error': f'Link with id={link_id} does not exist.'},
+                status=HTTPStatus.BAD_REQUEST
+            )
+
+        # set new owner for entity
         entities: Collection = self.request.app.get('MONGO_DB')[DbCollection.ENTITY]
-        entities.update_one(
-            {'_id': item.get('entity_id')},
+        entities.replace_one(
+            {'_id': ObjectId(link.get('entity_id'))},
             {'login': new_owner},
-            {'upsert': True}
+            upsert=True
         )
 
-        links.delete_one({'_id': link_id})
-
+        # remove used link
+        links.delete_one({'_id': ObjectId(link_id)})
         return web.json_response({'message': 'Object was received.'}, status=HTTPStatus.OK)
