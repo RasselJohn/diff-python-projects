@@ -6,7 +6,7 @@ ENV PYTHONUNBUFFERED 1
 RUN mkdir /home/app \
  && mkdir /home/app/config
 
-ADD config/requirements.txt /home/app/
+ADD config/requirements.txt /home/app/config
 
 RUN pip install -r /home/app/config/requirements.txt
 

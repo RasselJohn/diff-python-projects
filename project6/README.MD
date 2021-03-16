@@ -5,7 +5,7 @@ Tools: **Aiohttp, Mongo DB, Pytest, Docker**
 
 For running:
 - Direct way: `python manage.py`
-- Docker way (while it does not work!): `docker-compose -f deploy/docker-compose.yml up --build`
+- Docker way: `docker-compose -f deploy/docker-compose.yml up --build`. Url `http://localhost:8000/`
 
 Some assumptions(!):
 - Auth token is just uuid4.
