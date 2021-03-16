@@ -14,8 +14,10 @@ Tools: **Aiohttp, Mongo DB, Pytest, Docker**
 
 #### Running:
 - Direct way: `python manage.py`
-- Docker way: `docker-compose -f deploy/docker-compose.yml up --build`. Url `http://localhost:8080/`
-After running service will be on `http://localhost:8080/`  
+- Docker way: `docker-compose -f deploy/docker-compose.yml up --build`. 
+
+After running (any of ways) service will be on `http://localhost:8080/`  
+
 **EXAMPLES(!)** for requests to API are into file `main.http`. 
 
 #### Tests
