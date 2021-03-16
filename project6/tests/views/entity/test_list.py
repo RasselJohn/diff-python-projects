@@ -25,5 +25,5 @@ async def test_entity_list_success(
     assert response.status == 200
 
     data: dict = await response.json()
-    assert 'entities' in data
-    assert len(data.get('entities')) == 3
+    assert 'items' in data
+    assert len(data.get('items')) == 3

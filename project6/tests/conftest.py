@@ -54,7 +54,7 @@ def auth_token_fx(request: SubRequest, db_fx: database.Database, user_fx: dict) 
         db_fx[DbCollection.AUTH].delete_one({'login': login})
 
     request.addfinalizer(remove_auth)
-    return {'token': token}
+    return {'Authorization': token}
 
 
 @pytest.fixture

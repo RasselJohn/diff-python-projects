@@ -10,11 +10,13 @@ services:
       dockerfile: deploy/Dockerfile
 
     ports:
-      - "8000:8080"
+      - "8080:8080"
 
     links:
       - mongo
 
+    environment:
+      - MONGO_HOST=mongo # container_name of mongo !
     command: "python main.py"
 
   mongo:

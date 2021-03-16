@@ -30,9 +30,9 @@ class ReceiveLinkView(web.View):
 
         # set new owner for entity
         entities: Collection = self.request.app.get('MONGO_DB')[DbCollection.ENTITY]
-        entities.replace_one(
+        entities.update_one(
             {'_id': ObjectId(link.get('entity_id'))},
-            {'login': new_owner},
+            {'$set': {'login': new_owner}},
             upsert=True
         )
 

@@ -6,12 +6,12 @@ urls = [
     web.post('/registration', auth.RegistrationView, name='registration'),
     web.post('/login', auth.LoginView, name='login'),
 
-    # entity
-    web.post('/entity/create', entity.CreateEntityView, name='entity-create'),
-    web.get('/entity/list', entity.ListEntitiesView, name='entity-list'),
-    web.delete('/entity/remove/{entity_id}', entity.RemoveEntityView, name='entity-remove'),
+    # entity (e.g item)
+    web.post('/items/new', entity.CreateEntityView, name='entity-create'),
+    web.get('/items', entity.ListEntitiesView, name='entity-list'),
+    web.delete('/items/{entity_id}', entity.RemoveEntityView, name='entity-remove'),
 
     # link
-    web.post('/link/generate', link.GenerateLinkView, name='link-generate'),
-    web.get('/link/receive', link.ReceiveLinkView, name='link-receive'),
+    web.post('/send', link.GenerateLinkView, name='link-generate'),
+    web.get('/get', link.ReceiveLinkView, name='link-receive'),
 ]
