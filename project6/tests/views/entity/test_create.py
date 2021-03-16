@@ -7,8 +7,8 @@ from src.enums import DbCollection
 
 
 async def test_entity_create_success(
-        db_fx: MongoClient,
         aiohttp_client_fx: Any,
+        db_fx: MongoClient,
         user_fx: dict,
         auth_token_fx: dict
 ) -> NoReturn:

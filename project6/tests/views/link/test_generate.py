@@ -43,8 +43,8 @@ async def test_link_generate_absent_param(aiohttp_client_fx: Any, auth_token_fx:
 
 
 async def test_link_generate_absent_user(
-        db_fx: MongoClient,
         aiohttp_client_fx: Any,
+        db_fx: MongoClient,
         user_fx: dict,
         auth_token_fx: dict
 ) -> NoReturn:

@@ -7,15 +7,14 @@ from uuid import uuid4
 import pytest
 from _pytest.fixtures import SubRequest
 from aiohttp import web
-from pymongo import database, MongoClient
-from pymongo.collection import Collection
+from pymongo import collection, database, MongoClient
 
 from src.enums import DbCollection
 from src.middlewares import check_login
 from src.urls import urls
 
 
-@pytest.fixture  # (scope="session", autouse=True)
+@pytest.fixture
 def db_fx() -> database.Database:
     client = MongoClient(environ.get('MONGO_HOST', 'localhost'), int(environ.get('MONGO_PORT', 27017)))
     client.drop_database('MainDb_test')
@@ -36,7 +35,7 @@ def user_fx(request: SubRequest, db_fx: database.Database) -> dict:
 
 @pytest.fixture
 def auth_token_fx(request: SubRequest, db_fx: database.Database, user_fx: dict) -> dict:
-    auth_collection: Collection = db_fx[DbCollection.AUTH]
+    auth_collection: collection.Collection = db_fx[DbCollection.AUTH]
     login: str = user_fx.get('login')
     token = str(uuid4())
 
@@ -50,7 +49,7 @@ def auth_token_fx(request: SubRequest, db_fx: database.Database, user_fx: dict) 
         upsert=True
     )
 
-    def remove_auth():
+    def remove_auth() -> None:
         db_fx[DbCollection.AUTH].delete_one({'login': login})
 
     request.addfinalizer(remove_auth)

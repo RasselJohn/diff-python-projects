@@ -36,7 +36,7 @@ DELETE http://localhost:8080/items/6050b7256f273b00b28828ba
 Authorization: 860e4f35-e428-4364-a1c2-6f180c04dce8
 Content-Type: application/json
 
-### tranfer item
+### send item
 POST http://localhost:8080/send
 Authorization: 860e4f35-e428-4364-a1c2-6f180c04dce8
 Content-Type: application/json

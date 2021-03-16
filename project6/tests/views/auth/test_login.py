@@ -6,7 +6,7 @@ from pymongo import MongoClient
 from src.enums import DbCollection
 
 
-async def test_login_success(db_fx: MongoClient, aiohttp_client_fx: Any, user_fx: dict) -> NoReturn:
+async def test_login_success(aiohttp_client_fx: Any, db_fx: MongoClient, user_fx: dict) -> NoReturn:
     response: Response = await aiohttp_client_fx.post(aiohttp_client_fx.app.router['login'].url_for(), json=user_fx)
 
     assert response.status == 200

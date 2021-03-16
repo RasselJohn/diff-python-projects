@@ -2,24 +2,24 @@ Test project #5
 =================
 Language: **Python**  
 Tools: **Aiohttp, Mongo DB, Pytest, Docker**  
-**Examples** of requests are into file `main.http`. 
+
 
 -------
 #### Some assumptions(!):
 - Auth token is just uuid4 and must be in 'header' of request: {'token': token_value}
-- Passwords saved without encryption.
-- Login is unique - so references between tables use it, instead of using DBRef;
-- Entity == item.
+- Passwords save without encryption;
+- Login is unique - so references between tables use it, instead of using DBRef.
 
 -------
 
 #### Running:
 - Direct way: `python manage.py`
-- Docker way: `docker-compose -f deploy/docker-compose.yml up --build`. Url `http://localhost:8000/`
-
+- Docker way: `docker-compose -f deploy/docker-compose.yml up --build`. Url `http://localhost:8080/`
+After running service will be on `http://localhost:8080/`  
+**EXAMPLES(!)** for requests to API are into file `main.http`. 
 
 #### Tests
-From current dir: `pytest -c config/pytest.ini`.
+From current directory: `pytest -c config/pytest.ini`.
 
 -------
 #### Tables(by default all have `_id` field):

@@ -1,6 +1,7 @@
 from typing import Any, NoReturn
 
 from aiohttp.web_response import Response
+from bson import ObjectId
 from pymongo import MongoClient
 
 from src.enums import DbCollection
@@ -12,41 +13,31 @@ async def test_entity_remove_success(
         user_fx: dict,
         auth_token_fx: dict
 ) -> NoReturn:
-    # at first delete all data
-    db_fx[DbCollection.ENTITY].delete_many({})
-
     login: str = user_fx.get('login')
-    data = {'login': login, 'data': {'data1': 123, 'data2': 'qwe'}}
+    entity_id: ObjectId = db_fx[DbCollection.ENTITY].insert_one(
+        {'login': login, 'data': {'data1': 123, 'data2': 'qwe'}}
+    ).inserted_id
 
-    # data will receive 'id' field
-    db_fx[DbCollection.ENTITY].insert_one(data)
     response: Response = await aiohttp_client_fx.delete(
-        aiohttp_client_fx.app.router['entity-remove'].url_for(entity_id=str(data.get('_id'))),
+        aiohttp_client_fx.app.router['entity-remove'].url_for(entity_id=str(entity_id)),
         headers=auth_token_fx,
     )
 
     assert response.status == 200
     assert 'message' in await response.json()
-    assert db_fx[DbCollection.ENTITY].find_one({'_id': data.get('_id')}) is None
+    assert db_fx[DbCollection.ENTITY].find_one({'_id': entity_id}) is None
 
 
 async def test_entity_remove_not_owner(
         aiohttp_client_fx: Any,
         db_fx: MongoClient,
-        user_fx: dict,
         auth_token_fx: dict
 ) -> NoReturn:
-    # at first delete all data
-    db_fx[DbCollection.ENTITY].delete_many({})
-
-    owner_login = f'{user_fx.get("login")}_1'
-    data = {'login': owner_login, 'data': {'data1': 1243, 'data2': 'qwe'}}
-    # data will receive 'id' field
-    db_fx[DbCollection.ENTITY].insert_one(data)
+    entity_id: ObjectId = db_fx[DbCollection.ENTITY].insert_one({'login': 'some_test_user', 'data': 'qwe'}).inserted_id
 
     # but auth_token_fx is for other user
     response: Response = await aiohttp_client_fx.delete(
-        aiohttp_client_fx.app.router['entity-remove'].url_for(entity_id=str(data.get('_id'))),
+        aiohttp_client_fx.app.router['entity-remove'].url_for(entity_id=str(entity_id)),
         headers=auth_token_fx,
     )
 
