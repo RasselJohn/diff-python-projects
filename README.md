@@ -14,5 +14,6 @@ All projects are not for production! They are just examples! Don't use them - or
 - (**newly!**) [Project #5 ](project6/) - **Aiohttp + Mong DB + Pytest + Docker**
 
 ####**Rust**:
-1. [Project #5 ](project5/) - **Actix Framework + Docker**
+1. [Project #1 ](project5/) - **Actix Framework + Docker**
+1. [Project #2 ](project7/) - **FLTK**
 
