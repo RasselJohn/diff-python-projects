@@ -46,7 +46,7 @@ Content-Type: application/json
   "item_id": "6050b78783c47356514d3450"
 }
 
-### receive tranfered item
+### receive transfer item
 GET http://localhost:8080/get?link_id=6050bcdf7b6b8cad03e284c9
 Authorization: 14b71d88-fed6-4f06-aa6a-18f6f7b0f60e
 Content-Type: application/json

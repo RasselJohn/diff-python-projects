@@ -3,7 +3,19 @@ Test project #5
 Language: **Python**  
 Tools: **Aiohttp, Mongo DB, Pytest, Docker**  
 
+------
+Task:
+EntryPoints:
+- `registration/`
+- `login/`
+- `items/new/` - create item (object with data;  it has reference to user)
+- `items/` -  list of items
+- `items/{entity_id}` - remove item
+- `send/` -  transfer item to other owner(user)
+- `get/` -  receive transfer item by owner
 
+**EXAMPLES(!)** for requests to API are into file `main.http`. 
+ 
 -------
 #### Some assumptions(!):
 - Auth token is just uuid4 and must be in 'header' of request: {'token': token_value}
@@ -18,7 +30,6 @@ Tools: **Aiohttp, Mongo DB, Pytest, Docker**
 
 After running (any of ways) service will be on `http://localhost:8080/`  
 
-**EXAMPLES(!)** for requests to API are into file `main.http`. 
 
 #### Tests
 From current directory: `pytest -c config/pytest.ini`.
