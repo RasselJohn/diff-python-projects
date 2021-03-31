@@ -1,14 +1,53 @@
-### Recieve for concrete date
-GET http://localhost:8080/day?city=Sidney&date=2020-12-18
+### registration
+POST http://localhost:8080/registration
 Content-Type: application/json
 
-### Recieve for concrete date(error)
-GET http://localhost:8080/day?city=&date=
+{
+  "login": "john",
+  "password": "password"
+}
+
+### login
+POST http://localhost:8080/login
 Content-Type: application/json
 
-### Recieve for week date
-GET http://localhost:8080/week?city=Sidney
+{
+  "login": "john2",
+  "password": "password2"
+}
+
+### create item (entity) - all fields in json will be added to 'data' field in entity
+POST http://localhost:8080/items/new
+Authorization: 860e4f35-e428-4364-a1c2-6f180c04dce8
 Content-Type: application/json
 
-### Test weather api
-GET https://api.weatherapi.com/v1/forecast.json?key=<API_KEY>&q=Sidney&days=5&lang=ru
+{
+  "any_data": "john",
+  "any_data2": "john2"
+}
+
+### list of items
+GET http://localhost:8080/items
+Authorization: 860e4f35-e428-4364-a1c2-6f180c04dce8
+
+
+### remove item
+DELETE http://localhost:8080/items/6050b7256f273b00b28828ba
+Authorization: 860e4f35-e428-4364-a1c2-6f180c04dce8
+Content-Type: application/json
+
+### send item
+POST http://localhost:8080/send
+Authorization: 860e4f35-e428-4364-a1c2-6f180c04dce8
+Content-Type: application/json
+
+{
+  "new_owner": "john2",
+  "item_id": "6050b78783c47356514d3450"
+}
+
+### receive tranfered item
+GET http://localhost:8080/get?link_id=6050bcdf7b6b8cad03e284c9
+Authorization: 14b71d88-fed6-4f06-aa6a-18f6f7b0f60e
+Content-Type: application/json
+

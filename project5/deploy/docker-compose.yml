@@ -3,15 +3,25 @@
 version: "3.7"
 
 services:
-  rust: &rust
+  aiohttp:
+    container_name: main_server
     build:
       context: ../
       dockerfile: deploy/Dockerfile
 
-    environment:
-      WEATHER_API_KEY: <your_api_key_on_http://api.weatherapi.com>
-
     ports:
       - "8080:8080"
 
-    command: cargo run
+    links:
+      - mongo
+
+    environment:
+      - MONGO_HOST=mongo # container_name of mongo !
+    command: "python main.py"
+
+  mongo:
+    container_name: mongo
+    hostname: mongo
+    image: mongo
+    ports:
+      - "27017:27017"
