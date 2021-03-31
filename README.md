@@ -5,7 +5,6 @@
 **WARNING!**
 All projects are not for production! They are just examples! Don't use them - or only your responsibility.
 
-### ****:
 - [Project #1 ](project1/) - **Django**
 - [Project #2 ](project2/) - **Django + Django Channel + Docker**
 - [Project #2 Remake ](project2_remake/) - **Aiohttp + Docker**
