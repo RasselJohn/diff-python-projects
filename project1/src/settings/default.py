@@ -16,8 +16,8 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 SITE_ID = 1
-# Application definition
 
+# Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -62,15 +62,14 @@ TEMPLATES = [
 WSGI_APPLICATION = 'src.wsgi.application'
 
 # Database
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'project',
-        'USER': 'project',
-        'PASSWORD': 'project',
-        'HOST': 'postgres',
-        'PORT': '5432',
+        'NAME': os.environ.get('DJANGO_DB_NAME', 'project'),
+        'USER': os.environ.get('DJANGO_DB_USER', 'project'),
+        'PASSWORD': os.environ.get('DJANGO_DB_PASSWORD', 'project'),
+        'HOST': os.environ.get('DJANGO_DB_HOST', 'localhost'),
+        'PORT': os.environ.get('DJANGO_DB_PORT', '5432'),
     }
 }
 
@@ -86,7 +85,6 @@ USE_L10N = True
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
-
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [

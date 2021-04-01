@@ -1,9 +1,11 @@
 ;(function () {
     // init form if it exists
     let form = document.getElementById('form');
+
     if (!form) {
         return false;
     }
+
     form.onsubmit = () => {
         let csrf = document.getElementsByName('csrfmiddlewaretoken')[0].value;
         let options = {

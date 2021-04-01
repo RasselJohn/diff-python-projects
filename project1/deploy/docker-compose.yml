@@ -1,0 +1,36 @@
+# for local development
+# running from base directory: docker-compose -f deploy/docker-compose.yml up --build
+version: "3.7"
+
+services:
+  django: &django
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+
+    ports:
+      - "8000:8000"
+
+    links:
+      - db
+
+    environment:
+      - DJANGO_DB_HOST=db                 # without it django does not see postgres
+      # - DJANGO_SUPERUSER_PASSWORD=admin   # for creation of superuser
+
+    # "python manage.py createsuperuser --username admin" - does not work - instead of it there just uses fixtures!
+    command: bash -c "python manage.py migrate && python manage.py loaddata fixtures.json && python manage.py runserver 0.0.0.0:8000"
+
+  db:
+    image: postgres:12.0
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+    environment:
+      - POSTGRES_USER=project
+      - POSTGRES_PASSWORD=project
+      - POSTGRES_DB=project
+
+volumes:
+  postgres_data:
