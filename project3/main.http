@@ -1,3 +1,4 @@
+# Send array of visited links and save them
 POST http://localhost:8000/api/visited-links/
 Content-Type: application/json
 
@@ -10,8 +11,8 @@ Content-Type: application/json
   ]
 }
 
-###
-# date_from can be taken from api/visited-links/ (param 'timestamp')
-# date_to - just add some seconds to date_from
-GET http://localhost:8000/api/visited-domains/?date_from=1607606600&date_to=1607606600
+### Get unique visited domains for time period.
+# 'date_from' can be taken from api/visited-links/ (param 'timestamp')
+# 'date_to' - just add some seconds to date_from
+GET http://localhost:8000/api/visited-domains/?date_from=1617289946&date_to=1617289949
 Content-Type: application/json

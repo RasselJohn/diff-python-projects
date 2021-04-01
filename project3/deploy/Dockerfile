@@ -1,6 +1,6 @@
 # Running for example: docker build -f deploy/docker/Dockerfile -t project_dev .
 
-FROM python:3.7
+FROM python:3.8
 ENV PYTHONUNBUFFERED 1
 
 RUN mkdir /home/app \

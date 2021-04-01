@@ -43,7 +43,7 @@ class DomainsAddForm(forms.Form):
             redis_client.zadd('timestamps', {pk: timestamp for pk in urls.keys()}, nx=True)
 
         except Exception:
-            log.error(f'Error: {format_exc()}')
+            print(f'Error: {format_exc()}')
             return None
 
         return timestamp

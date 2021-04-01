@@ -1,6 +1,5 @@
-django>=2.2.10
-django-redis==4.11.0
-pycodestyle==2.3.1
-pytz==2017.2
-psycopg2==2.8.3
-redis==3.4.1
+django==3.1.7
+django-redis==4.12.1
+pytz==2021.1
+psycopg2-binary==2.8.6
+redis==3.5.3

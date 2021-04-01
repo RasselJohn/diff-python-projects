@@ -4,9 +4,11 @@ Languages: **Python, JS**
 Tools: **Django Framework, Django Channel**
 
 For running:
-- python manage.py exchange
-- python manage.py checkadmincurrency
-- python manage.py runserver
+```
+python manage.py exchange
+python manage.py checkadmincurrency
+python manage.py runserver
+```
 
 Task:
 ---------------

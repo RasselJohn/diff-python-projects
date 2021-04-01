@@ -1,5 +1,8 @@
-from django.conf.urls import url, include
+from aiohttp import web
 
-urlpatterns = [
-    url(r'^', include('src.apps.frontend.urls')),
+from src import views
+
+urls = [
+    web.get('/', views.IndexView, name='index'),
+    web.get('/remote', views.RemoteView, name='remote')
 ]

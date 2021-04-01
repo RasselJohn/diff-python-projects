@@ -43,7 +43,7 @@ class DomainsListForm(forms.Form):
             sites_pk: set = redis_client.zrangebyscore('timestamps', date_from, date_to)
             urls: list = redis_client.hmget('sites', sites_pk)
         except Exception:
-            log.error(f'Error: {format_exc()}')
+            print(f'Error: {format_exc()}')
             return None
 
         return set(urls)

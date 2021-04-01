@@ -9,8 +9,9 @@ def generate_remote_data(*args) -> Generator[None, dict, None]:
 
 
 def set_timeout(delay: int) -> Callable[..., Any]:
-    def wrap(func):
-        async def sub_wrap(*args):
+    def wrap(func) -> Callable[..., Any]:
+
+        async def sub_wrap(*args) -> None:
             try:
                 await asyncio.wait_for(func(*args), timeout=delay)
             except asyncio.TimeoutError:

@@ -1,17 +1,16 @@
 Test project #2
 =================
-Languages: **Python, JS**  
-Tools: **Django Framework, Django Channel, Docker**
+Language: **Python**  
+Tools: **Aiohttp Framework, Docker**
 
-Task resolved through 3 generators.
-They are called in **async loop** and every returns by an element (print in console)
-and these data will be sorted and printed (in console and on main page of site).  
-Run with **Docker** (in current directory):  `docker-compose -f deploy/docker-compose.yml up --build` 
-on url http://localhost:8000
+Data loads from current server (3 requests) with waiting period 2 seconds.  
+For checking: run server.py in console and **open in browser by address http://localhost:8080**.  
+For checking thorough **Docker** (run in current directory):  `docker-compose -f deploy/docker-compose.yml up --build`   
+Data will be sorted and printed (in console and on main page of site).
 
 Task
 ---------------
-- There are 3 remote sources of data
+- There exist 3 remote sources of data
 (for test project these sources can be 2 static json files)
 Data is array, where every element consists of id and text field.
 Example:
@@ -27,6 +26,6 @@ IDs distribute so :
 - third source : ID 21-30,51-60;
 ```
 
-- There exists only one point(url) for getting these sorted data.
-- This point must make a request to all sources, get them and sorts.
-- All errors have to be ignored. Timeout for every source is 2 seconds.
+- There exists only point(url) for getting these sorted data.
+- This point must make request to all sources, gets them and sorts.
+- All errors have to be ignored. Timeout for every source - 2 seconds.

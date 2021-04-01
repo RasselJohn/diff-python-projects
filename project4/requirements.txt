@@ -1,9 +1,5 @@
-bs4==0.0.1
-channels==2.2
-channels-redis==2.1.1
-Django==2.2.18
-django-crontab==0.7.1
-pycodestyle==2.3.1
-pytz==2017.2
-redis==3.3.6
-python-dateutil==2.8.0
+Django==3.1.7
+channels==3.0.3
+channels-redis==3.2.0
+pytz==2021.1
+redis==3.5.3

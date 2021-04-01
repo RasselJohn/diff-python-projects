@@ -1,7 +1,7 @@
 from aiohttp import web
 from aiohttp.web_response import Response
 
-from src.apps.frontend.utils import generate_remote_data
+from src.utils import generate_remote_data
 
 
 class RemoteView(web.View):

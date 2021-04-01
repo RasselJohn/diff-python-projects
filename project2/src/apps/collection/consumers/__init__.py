@@ -1,1 +1,0 @@
-from .collectdata import CollectDataConsumer

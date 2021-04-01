@@ -4,7 +4,7 @@ import json
 from aiohttp import web, ClientSession
 from yarl import URL
 
-from src.apps.frontend.utils import set_timeout
+from src.utils import set_timeout
 
 
 class IndexView(web.View):
