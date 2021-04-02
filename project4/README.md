@@ -19,7 +19,7 @@ EntryPoints:
  
 -------
 #### Some assumptions(!):
-- Auth token is just uuid4 and must be in 'header' of request: {'token': token_value}
+- Auth token is just uuid4 and must be in 'header' of request: {'Authorization': token_value}
 - Login is unique - so references between tables use it, instead of using DBRef.
 
 -------

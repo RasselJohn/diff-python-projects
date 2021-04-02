@@ -24,7 +24,7 @@ class LoginView(web.View):
             return web.json_response({'error': 'Login or password absent.'}, status=HTTPStatus.BAD_REQUEST)
 
         users_collection: Collection = self.request.app.get('MONGO_DB')[DbCollection.USER]
-        user = users_collection.find_one({'login': login})
+        user: Optional[dict] = users_collection.find_one({'login': login})
         if not user or not check_password_hash(user.get('password'), password):
             return web.json_response({'error': f'Incorrect auth data.'}, status=HTTPStatus.BAD_REQUEST)
 

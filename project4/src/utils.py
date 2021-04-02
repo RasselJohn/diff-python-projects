@@ -14,7 +14,7 @@ from src.enums import DbCollection
 # only for class-based views!
 def require_auth(class_method: Callable[[Any], Any]) -> Callable[[Any], Any]:
     async def wrapper(*args, **kwargs) -> web.StreamResponse:
-        request = args[0].request
+        request: web_request.Request = args[0].request
         auth_token: Optional[str] = request.headers.get('Authorization')
 
         if auth_token:

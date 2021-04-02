@@ -18,7 +18,7 @@ class RemoveEntityView(web.View):
         if not entities.find_one(filter_params):
             return web.json_response(
                 {'error': f'Entity with id={entity_id} does not exist.'},
-                status=HTTPStatus.BAD_REQUEST
+                status=HTTPStatus.NOT_FOUND
             )
 
         entities.delete_one(filter_params)
