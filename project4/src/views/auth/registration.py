@@ -5,7 +5,7 @@ from aiohttp import web
 from pymongo.collection import Collection
 
 from src.enums import DbCollection
-from src.utils import get_request_json
+from src.utils import get_request_json, get_password_hash
 
 
 class RegistrationView(web.View):
@@ -28,5 +28,5 @@ class RegistrationView(web.View):
                 status=HTTPStatus.BAD_REQUEST
             )
 
-        users_collection.insert_one({'login': login, 'password': password})
+        users_collection.insert_one({'login': login, 'password': get_password_hash(password)})
         return web.json_response({'message': 'User was registered successfully!'}, status=HTTPStatus.OK)

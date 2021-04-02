@@ -1,26 +1,43 @@
-Test project #4
+Test project #5
 =================
-Languages: **Python, JS**  
-Tools: **Django Framework, Django Channel**
+Language: **Python**  
+Tools: **Aiohttp, Mongo DB, Pytest, Docker**  
 
-For running:
-```
-python manage.py exchange
-python manage.py checkadmincurrency
-python manage.py runserver
-```
 
 Task:
----------------
-Create web application for currency exchange.
-- There are 2 pages: `/` and `/admin/`
-- Page `/` shows current currency exchange rate( Dollar -> Rub).
-- App must update exchange rate from third-party sources(http://www.rbc.ru and etc.) silently in extra proccess every 5 minute.
-- After update all opened page `/` must be updated with new rate data.
-- Page `/admin/` consist of form with 2 fields - `number` and `date`. 
-It allows to set custom currency rate before specified `date`, 
-e.g real rate will be ignored -  there will be used `number` field value **before** `date`.
-- Also page `/admin/` has to show previous values which were printed in the form earlier.
-- Allowed to use some UI frameworks on page.
-- Allowed to use JS.
-- Tests are required.
+------
+EntryPoints:
+- `registration/`
+- `login/`
+- `items/new/` - create item (object with data;  it has reference to user)
+- `items/` -  list of items
+- `items/{entity_id}` - remove item
+- `send/` -  transfer item to other owner(user)
+- `get/` -  receive transfer item by owner
+
+**EXAMPLES(!)** for requests to API are into file `main.http`. 
+ 
+-------
+#### Some assumptions(!):
+- Auth token is just uuid4 and must be in 'header' of request: {'token': token_value}
+- Login is unique - so references between tables use it, instead of using DBRef.
+
+-------
+
+#### Running:
+- Direct way: `python manage.py`
+- Docker way: `docker-compose -f deploy/docker-compose.yml up --build`. 
+
+After running (any of ways) service will be on `http://localhost:8080/`  
+
+
+#### Tests
+From current directory: `pytest -c config/pytest.ini`.
+
+-------
+#### Tables(by default all have `_id` field):
+- name: `User`, fields: `login, password`;
+- name: `Auth`, fields: `login, token, expire`;
+- name: `Entity`(e.g **item**)), fields: `login, data`;
+- name: `Link`, fields: `new_owner, entity_id`.
+ 

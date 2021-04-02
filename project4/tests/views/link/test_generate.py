@@ -4,6 +4,7 @@ from aiohttp.web_response import Response
 from pymongo import MongoClient
 
 from src.enums import DbCollection
+from src.utils import get_password_hash
 
 
 async def test_link_generate_success(
@@ -13,7 +14,7 @@ async def test_link_generate_success(
         auth_token_fx: dict
 ) -> NoReturn:
     new_owner = 'test_new_owner'
-    db_fx[DbCollection.USER].insert_one({'login': new_owner, 'password': 'qwe'})
+    db_fx[DbCollection.USER].insert_one({'login': new_owner, 'password': get_password_hash('qwe')})
     entity_id = str(db_fx[DbCollection.ENTITY].insert_one({'login': user_fx.get('login'), 'data': {}}).inserted_id)
 
     request_data = {'new_owner': new_owner, 'item_id': entity_id}

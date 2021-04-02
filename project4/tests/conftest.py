@@ -10,8 +10,8 @@ from aiohttp import web
 from pymongo import collection, database, MongoClient
 
 from src.enums import DbCollection
-from src.middlewares import check_login
 from src.urls import urls
+from src.utils import get_password_hash
 
 
 @pytest.fixture
@@ -23,14 +23,14 @@ def db_fx() -> database.Database:
 
 @pytest.fixture
 def user_fx(request: SubRequest, db_fx: database.Database) -> dict:
-    params_data = {'login': 'test', 'password': 'test'}
+    params_data = {'login': 'test', 'password': get_password_hash('test')}
     db_fx[DbCollection.USER].insert_one(params_data.copy())
 
     def remove_user():
         db_fx[DbCollection.USER].delete_one(params_data)
 
     request.addfinalizer(remove_user)
-    return params_data
+    return {'login': 'test', 'password': 'test'}
 
 
 @pytest.fixture
@@ -60,7 +60,6 @@ def auth_token_fx(request: SubRequest, db_fx: database.Database, user_fx: dict) 
 def aiohttp_client_fx(db_fx: MongoClient, loop: ProactorEventLoop, aiohttp_client: Callable[[Any], Any]) -> Any:
     app = web.Application()
     app.router.add_routes(urls)
-    app.middlewares.append(check_login)
 
     app['MONGO_DB']: database.Database = db_fx
     app['TOKEN_EXPIRE'] = int(environ.get('TOKEN_EXPIRE', 5))

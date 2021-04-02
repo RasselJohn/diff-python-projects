@@ -7,7 +7,7 @@ from aiohttp import web
 from pymongo.collection import Collection
 
 from src.enums import DbCollection
-from src.utils import get_request_json
+from src.utils import get_request_json, check_password_hash
 
 
 class LoginView(web.View):
@@ -24,8 +24,8 @@ class LoginView(web.View):
             return web.json_response({'error': 'Login or password absent.'}, status=HTTPStatus.BAD_REQUEST)
 
         users_collection: Collection = self.request.app.get('MONGO_DB')[DbCollection.USER]
-        user = users_collection.find_one({'login': login, 'password': password})
-        if not user:
+        user = users_collection.find_one({'login': login})
+        if not user or not check_password_hash(user.get('password'), password):
             return web.json_response({'error': f'Incorrect auth data.'}, status=HTTPStatus.BAD_REQUEST)
 
         # auth token is just uuid4
