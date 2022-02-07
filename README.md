@@ -9,3 +9,4 @@ All projects are not for production! They are just examples! Don't use them - or
 - [Project #2 ](project2/) - **Aiohttp + Docker**
 - [Project #3 ](project3/) - **Django + Redis + Docker**
 - [Project #4 ](project4/) - **Aiohttp + Mong DB + Pytest + Docker**
+- [Project #5 ](project5/) - **Clean Python**
