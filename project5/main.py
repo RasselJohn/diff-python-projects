@@ -18,8 +18,12 @@ while True:
 
     if g.is_end_game():
         print(f'Win {1 if g.is_first_player_step else 2} player!')
+
+        is_new_game = input("New game(y/n)?")
+        if is_new_game == 'y':
+            g = Game()
+            continue
+
         break
 
     g.change_player()
-
-input("Press any key for exit...")
