@@ -12,7 +12,6 @@ class LoginView(View):
             return JsonResponse({'url': reverse_lazy('users')})
 
         form = LoginForm(request.POST.copy())
-
         if not form.is_valid():
             return JsonResponse(get_form_errors(form))
 

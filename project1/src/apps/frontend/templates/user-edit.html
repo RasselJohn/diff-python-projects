@@ -7,40 +7,34 @@
 
 
 {% block header %}
-    <a href="{% url 'users' %}"> <i class="material-icons left">undo</i>Назад</a>
+<a href="{% url 'users' %}"> <i class="material-icons left">undo</i>Назад</a>
 {% endblock %}
 
 {% block main %}
-    <div class="form-center">
-        <form method="post" action="{% url 'user_edit' user_id=user_detail.pk %}"
-              id="form">
-            {% csrf_token %}
-            <input type="text" name="first_name" placeholder="Имя"
-                   value="{{ user_detail.first_name }}" required>
+<div class="form-center">
+    <form method="post" action="{% url 'user_edit' user_id=user_detail.pk %}" id="form">
+        {% csrf_token %}
+        <input type="text" name="first_name" placeholder="Имя" value="{{ user_detail.first_name }}" required>
 
-            <input type="text" name="last_name" placeholder="Фамилия"
-                   value="{{ user_detail.last_name }}" required>
+        <input type="text" name="last_name" placeholder="Фамилия" value="{{ user_detail.last_name }}" required>
 
-            <input type="email" name="email" value="{{ user_detail.email }}"
-                   placeholder="Email" required>
+        <input type="email" name="email" value="{{ user_detail.email }}" placeholder="Email" required>
 
-            <input type="text" name="username" value="{{ user_detail.username }}"
-                   placeholder="Логин" required>
+        <input type="text" name="username" value="{{ user_detail.username }}" placeholder="Логин" required>
 
-            <input type="password" name="password" placeholder="Пароль">
-            <input type="password" name="password_repeat" placeholder="Повтор пароля">
+        <input type="password" name="password" placeholder="Пароль">
+        <input type="password" name="password_repeat" placeholder="Повтор пароля">
 
-            <label>
-                <input type="checkbox" name="is_staff"
-                       {% if user_detail.is_staff %}checked {% endif %}/>
-                <span>Полные права ? </span>
-            </label>
+        <label>
+            <input type="checkbox" name="is_staff" {% if user_detail.is_staff %}checked {% endif %} />
+            <span>Полные права ? </span>
+        </label>
 
-            <button class="btn waves-effect waves-light" type="submit">Применить
-                <i class="material-icons right">save</i>
-            </button>
-        </form>
-    </div>
+        <button class="btn waves-effect waves-light" type="submit">Применить
+            <i class="material-icons right">save</i>
+        </button>
+    </form>
+</div>
 {% endblock %}
 
 {% block scripts %}

@@ -3,33 +3,33 @@
 {% load static %}
 
 {% block header %}
-    <a href="{% url 'users' %}"> <i class="material-icons left">undo</i>Назад</a>
+<a href="{% url 'users' %}"> <i class="material-icons left">undo</i>Назад</a>
 {% endblock %}
 
 {% block main %}
-    <div class="form-center">
-        <form method="post" action="{% url 'user_add' %}" id="form">
-            Создание пользователя
-            {% csrf_token %}
-            <input type="text" name="first_name" placeholder="Имя" required/>
+<div class="form-center">
+    <form method="post" action="{% url 'user_add' %}" id="form">
+        Создание пользователя
+        {% csrf_token %}
+        <input type="text" name="first_name" placeholder="Имя" required />
 
-            <input type="text" name="last_name" placeholder="Фамилия" required/>
+        <input type="text" name="last_name" placeholder="Фамилия" required />
 
-            <input type="email" name="email" placeholder="Email" required/>
+        <input type="email" name="email" placeholder="Email" required />
 
-            <input type="text" name="username" placeholder="Логин" required autocomplete="off"/>
+        <input type="text" name="username" placeholder="Логин" required autocomplete="off" />
 
-            <input type="password" name="password" placeholder="Пароль" required>
-            <input type="password" name="password_repeat" placeholder="Повтор пароля" required>
+        <input type="password" name="password" placeholder="Пароль" required>
+        <input type="password" name="password_repeat" placeholder="Повтор пароля" required>
 
-            <label>
-                <input type="checkbox" name="is_staff"/>
-                <span>Полные права ? </span>
-            </label>
+        <label>
+            <input type="checkbox" name="is_staff" />
+            <span>Полные права ? </span>
+        </label>
 
-            <button class="btn waves-effect waves-light" type="submit">Сохранить
-                <i class="material-icons right">save</i>
-            </button>
-        </form>
-    </div>
+        <button class="btn waves-effect waves-light" type="submit">Сохранить
+            <i class="material-icons right">save</i>
+        </button>
+    </form>
+</div>
 {% endblock %}

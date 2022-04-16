@@ -4,52 +4,51 @@
 
 
 {% block header %}
-    {% if user.is_staff %}
-        <li>
-            <a href="{% url 'user_add' %}"><i class="material-icons left">add</i>Добавить</a>
-        </li>
-    {% endif %}
+{% if user.is_staff %}
+<li>
+    <a href="{% url 'user_add' %}"><i class="material-icons left">add</i>Добавить</a>
+</li>
+{% endif %}
 
-    <li>
-        <a href="{% url 'logout' %}"><i class="material-icons left">exit_to_app</i>Выход</a>
-    </li>
+<li>
+    <a href="{% url 'logout' %}"><i class="material-icons left">exit_to_app</i>Выход</a>
+</li>
 {% endblock %}
 
 {% block main %}
-    <table class="striped centered">
-        <tr>
-            <td>Имя</td>
-            <td>Фамилия</td>
-            <td>Логин</td>
-            <td>Email</td>
-            <td>Полные права</td>
-            {% if user.is_staff %}
-                <td>Список операций</td>
-            {% endif %}
-        </tr>
+<table class="striped centered">
+    <tr>
+        <td>Имя</td>
+        <td>Фамилия</td>
+        <td>Логин</td>
+        <td>Email</td>
+        <td>Полные права</td>
+        {% if user.is_staff %}
+        <td>Список операций</td>
+        {% endif %}
+    </tr>
 
-        {% for user_data in users_data %}
-            <tr>
-                <td>{{ user_data.first_name }}</td>
-                <td>{{ user_data.last_name }}</td>
-                <td>{{ user_data.username }}</td>
-                <td>{{ user_data.email }}</td>
-                <td>
-                    {% if user_data.is_staff %}<i class="material-icons ">check</i>
-                    {% else %}<i class="material-icons ">clear</i></td>
-                    {% endif %}
-                {% if user.is_staff %}
-                    <td>
-                    <a class="waves-effect waves-light btn"
-                       onclick="location='{% url 'user_edit' user_id=user_data.id %}'">
-                        <i class="material-icons">edit</i>
-                    </a>
-                    <a class="waves-effect waves-light btn pink darken-1"
-                       onclick="location='{% url 'user_remove' user_id=user_data.id %}'">
-                        <i class="material-icons ">delete</i>
-                    </a>
-                {% endif %}
-            </tr>
-        {% endfor %}
-    </table>
+    {% for user_data in users_data %}
+    <tr>
+        <td>{{ user_data.first_name }}</td>
+        <td>{{ user_data.last_name }}</td>
+        <td>{{ user_data.username }}</td>
+        <td>{{ user_data.email }}</td>
+        <td>
+            {% if user_data.is_staff %}<i class="material-icons ">check</i>
+            {% else %}<i class="material-icons ">clear</i></td>
+        {% endif %}
+        {% if user.is_staff %}
+        <td>
+            <a class="waves-effect waves-light btn" onclick="location='{% url 'user_edit' user_id=user_data.id %}'">
+                <i class="material-icons">edit</i>
+            </a>
+            <a class="waves-effect waves-light btn pink darken-1"
+                onclick="location='{% url 'user_remove' user_id=user_data.id %}'">
+                <i class="material-icons ">delete</i>
+            </a>
+            {% endif %}
+    </tr>
+    {% endfor %}
+</table>
 {% endblock %}

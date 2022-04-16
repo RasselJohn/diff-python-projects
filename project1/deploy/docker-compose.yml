@@ -3,7 +3,8 @@
 version: "3.7"
 
 services:
-  django: &django
+  django:
+    &django
     build:
       context: ..
       dockerfile: deploy/Dockerfile
@@ -15,10 +16,9 @@ services:
       - db
 
     environment:
-      - DJANGO_DB_HOST=db                 # without it django does not see postgres
+      - DJANGO_DB_HOST=db # without it django does not see postgres
       # - DJANGO_SUPERUSER_PASSWORD=admin   # for creation of superuser
 
-    # "python manage.py createsuperuser --username admin" - does not work - instead of it there just uses fixtures!
     command: bash -c "python manage.py migrate && python manage.py loaddata fixtures.json && python manage.py runserver 0.0.0.0:8000"
 
   db:

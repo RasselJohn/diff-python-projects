@@ -1,15 +1,33 @@
 Test project #1
 =================
+
 Languages: **Python, JS**  
 Tools: **Django Framework, Docker**
 
-If local running - firstly there should to create superuser(!): `python manage.py createsuperuser`.  
-Running with Docker (in current directory): 
-`docker-compose -f deploy/docker-compose.yml up --build`  - project will be by url: http://localhost:8000.
+Running:
+Project will be by url: <http://localhost:8000>.
+Superuser login: **admin**, password: **admin**.
 
-Task:
+Local:
+
+- Migrate db:
+
+```python manage.py migrate```
+
+- Add fixtures with superuser auth data(login: **admin**, password: **admin**):
+```python manage.py loaddata fixtures.json```
+
+- Run server:
+```python manage.py runserver 0.0.0.0:8000```
+
+Throught Docker:
+
+```docker-compose -f deploy/docker-compose.yml up --build```  
+
+Task
 ---------------
-- Pages: login + list pages;
-- There must be next operations: add/remove/edit user and changing his permissions - full access or only reading access;
-- Allowed JS;
-- Use ORM and raw sql.
+
+- Pages: login + list of users pages;
+- Operations: add/remove/edit user and changing his permissions - full access or only reading access;
+- Use JS;
+- Use ORM and raw SQL.

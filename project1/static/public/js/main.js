@@ -1,16 +1,14 @@
-;(function () {
+; (function () {
     // init form if it exists
     let form = document.getElementById('form');
 
-    if (!form) {
-        return false;
-    }
+    if (!form) return false;
 
     form.onsubmit = () => {
         let csrf = document.getElementsByName('csrfmiddlewaretoken')[0].value;
         let options = {
             method: 'POST',
-            headers: {'X-CSRFToken': csrf},
+            headers: { 'X-CSRFToken': csrf },
             body: new FormData(form)
         };
         makeAjaxRequest(form.action, options);

@@ -14,7 +14,7 @@ class UserRemoveView(View):
     def post(self, request: HttpRequest, user_id: str) -> JsonResponse:
         user: User = get_object_or_404(User, pk=user_id)
 
-        # don't remove! just switch off
+        # user is not removed -  just switch off 'active' field.
         user.is_active = False
         user.save(update_fields=['is_active'])
 
