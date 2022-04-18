@@ -1,5 +1,6 @@
 from django.apps import AppConfig
-from django.utils.translation import ugettext_lazy as _
+from django.utils.cache import set_response_etag
+from django.utils.translation import gettext_lazy  as _
 
 
 class FrontendConfig(AppConfig):

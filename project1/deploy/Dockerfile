@@ -1,9 +1,11 @@
 # Running for example: docker build -f deploy/Dockerfile -t project .
 
-FROM python:3.8
-ENV PYTHONUNBUFFERED 1
+FROM python:3.10-slim-buster
 
-RUN mkdir /home/app && mkdir -p /var/project/static
+ENV PYTHONUNBUFFERED 1
+ENV PYTHONPATH=/home/app
+
+RUN mkdir /home/app
 
 COPY requirements.txt /home/app/
 

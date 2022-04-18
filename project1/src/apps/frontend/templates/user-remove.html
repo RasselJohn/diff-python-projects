@@ -14,17 +14,18 @@
 
 <div class="form-center">
     <form method="post" action="{% url 'user_remove' user_id=user_id %}" id="form">
-        Удалить пользователя?
-        {% csrf_token %}
-
-        <button class="btn waves-effect waves-light pink darken-1" type="submit">Удалить
-            <i class="material-icons right">not_interested</i>
-        </button>
-
-        <button class="btn waves-effect waves-light grey" onclick="location='{% url 'users' %}'; return false;">
-            Отмена
-        </button>
-
+        <div>
+            <label>Удалить пользователя {{user_name}} ?</label>
+            {% csrf_token %}
+        </div>
+        <div>
+            <button class="btn waves-effect waves-light pink darken-1" type="submit">Удалить
+                <i class="material-icons right">not_interested</i>
+            </button>
+            <button class="btn waves-effect waves-light grey" onclick="location='{% url 'users' %}'; return false;">
+                Отмена
+            </button>
+        </div>
     </form>
 </div>
 {% endblock %}

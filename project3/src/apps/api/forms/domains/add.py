@@ -8,7 +8,7 @@ from django import forms
 from django.conf import settings
 from django.contrib.postgres.forms import SimpleArrayField
 from django.utils import timezone
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from src.apps.api.utils import get_base_domain
 

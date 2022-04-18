@@ -1,10 +1,9 @@
 # for local development
 # running from base directory: docker-compose -f deploy/docker-compose.yml up --build
-version: "3.7"
+version: "3.8"
 
 services:
   django:
-    &django
     build:
       context: ..
       dockerfile: deploy/Dockerfile
@@ -17,12 +16,12 @@ services:
 
     environment:
       - DJANGO_DB_HOST=db # without it django does not see postgres
-      # - DJANGO_SUPERUSER_PASSWORD=admin   # for creation of superuser
 
-    command: bash -c "python manage.py migrate && python manage.py loaddata fixtures.json && python manage.py runserver 0.0.0.0:8000"
+    # cool hook - just wait 5 seconds while psql is loading - without any entrypoint shell scripts!
+    command: bash -c "sleep 5 && python manage.py migrate && python manage.py loaddata fixtures.json && python manage.py runserver 0.0.0.0:8000"
 
   db:
-    image: postgres:12.0
+    image: postgres:14.2-alpine
 
     volumes:
       - postgres_data:/var/lib/postgresql/data/

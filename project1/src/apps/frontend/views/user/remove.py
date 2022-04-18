@@ -9,7 +9,8 @@ class UserRemoveView(View):
     template_name = 'user-remove.html'
 
     def get(self, request: HttpRequest, user_id: str) -> HttpResponse:
-        return render(request, self.template_name, {'user_id': user_id})
+        user: User = get_object_or_404(User, pk=user_id)
+        return render(request, self.template_name, {'user_id': user_id, 'user_name': user.username})
 
     def post(self, request: HttpRequest, user_id: str) -> JsonResponse:
         user: User = get_object_or_404(User, pk=user_id)

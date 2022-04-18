@@ -30,10 +30,10 @@
 
     {% for user_data in users_data %}
     <tr>
-        <td>{{ user_data.first_name }}</td>
-        <td>{{ user_data.last_name }}</td>
+        <td>{{ user_data.first_name|default:'-' }}</td>
+        <td>{{ user_data.last_name|default:'-' }}</td>
         <td>{{ user_data.username }}</td>
-        <td>{{ user_data.email }}</td>
+        <td>{{ user_data.email|default:'-' }}</td>
         <td>
             {% if user_data.is_staff %}<i class="material-icons ">check</i>
             {% else %}<i class="material-icons ">clear</i></td>

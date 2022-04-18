@@ -1,5 +1,5 @@
-from django.conf.urls import url, include
+from django.urls import path, include
 
 urlpatterns = [
-    url(r'^', include('src.apps.frontend.urls')),
+    path(r'', include('src.apps.frontend.urls')),
 ]
