@@ -1,6 +1,8 @@
 import asyncio
 from typing import Generator, Callable, Any
 
+# in seconds
+MAX_REQUEST_TIMEOUT = 3
 
 def generate_remote_data(*args) -> Generator[None, dict, None]:
     for x, y in args:
