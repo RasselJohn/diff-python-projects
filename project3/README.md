@@ -4,16 +4,23 @@ Test project #3
 Language: **Python**  
 Tools: **Django Framework, Redis, Docker**
 
-For **handle** running:
+**WARNING!**
+This project is not for production! It's just example! Don't use it - or only your responsibility.
+
+---
+**Handle** running:
 
 - Create directory `logs` (path is `LOG_DIR` in `settings.py`)
 - Run `Redis`(default settings):
 - Run server: `python manage.py runserver`
 - For tests (Redis must be running): `python manage.py test`
 
-For running under **Docker** (url: <http://localhost:8000/>):  `docker-compose -f deploy/docker-compose.yml up --build`
+For running under **Docker** (url: <http://localhost:8000/>):  
+ `docker-compose -f deploy/docker-compose.yml up --build`
 
 **Examples** of API requests is into file **[main.http](main.http)**
+
+---
 
 Task
 ---------------

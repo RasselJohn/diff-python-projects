@@ -4,6 +4,13 @@ Test project #2
 Language: **Python**  
 Tools: **Aiohttp Framework, Docker**
 
+**WARNING!**
+This project is not for production! It's just example! Don't use it - or only your responsibility.
+
+---
+
+**Description:**
+
 Data loads from current server (3 requests) with waiting period 2 seconds.  
 
 For checking: run server.py in console and **open in browser by address <http://localhost:8080>**.  
@@ -11,6 +18,8 @@ For checking: run server.py in console and **open in browser by address <http://
 For checking thorough **Docker** (run in current directory):  `docker-compose -f deploy/docker-compose.yml up --build`
 
 Data will be sorted and printed (in console and on main page of site).
+
+---
 
 Task
 ---------------

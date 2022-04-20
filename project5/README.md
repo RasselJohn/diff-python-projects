@@ -3,6 +3,9 @@ Test project #5
 
 Language: **Python**  
 
+**WARNING!**
+This project is not for production! It's just example! Don't use it - or only your responsibility.
+
 Task
 ------
 

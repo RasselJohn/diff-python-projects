@@ -4,26 +4,31 @@ Test project #1
 Languages: **Python, JS**  
 Tools: **Django Framework, Docker**
 
-Running:
-Project will be by url: <http://localhost:8000>.
+**WARNING!**
+This project is not for production! It's just example! Don't use it - or only your responsibility.
+
+---
+**Running:**
+
+Project will be by url: <http://localhost:8000>.  
 Superuser login: **admin**, password: **admin**.
 
-Local:
+**Local:**
 
-- Migrate db:
-
+- Migrate db:  
 ```python manage.py migrate```
 
-- Add fixtures with superuser auth data(login: **admin**, password: **admin**):
+- Add fixtures with superuser auth data:  
 ```python manage.py loaddata fixtures.json```
 
 - Run server:
 ```python manage.py runserver 0.0.0.0:8000```
 
-Throught Docker:
+**Docker:**
 
 ```docker-compose -f deploy/docker-compose.yml up --build```  
 
+---
 Task
 ---------------
 
