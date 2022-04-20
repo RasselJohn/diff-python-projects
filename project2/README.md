@@ -4,29 +4,23 @@ Test project #2
 Language: **Python**  
 Tools: **Aiohttp Framework, Docker**
 
-**WARNING!**
-This project is not for production! It's just example! Don't use it - or only your responsibility.
-
----
-
-**Description:**
+Description
+---------------
 
 Data loads from current server (3 requests) with waiting period 2 seconds.  
 
-For checking: run server.py in console and **open in browser by address <http://localhost:8080>**.  
+For checking: run `server.py` and open <http://localhost:8080>.  
 
 For checking thorough **Docker** (run in current directory):  `docker-compose -f deploy/docker-compose.yml up --build`
 
-Data will be sorted and printed (in console and on main page of site).
-
----
+Data will be sorted and printed (in console and main page of site).
 
 Task
 ---------------
 
-- There exist 3 remote sources of data
-Data is array, where every element consists of id and text field.
-Example:
+- There are 3 remote sources of data.  
+Data is array, where every element consists of `id` and `text` fields.  
+Example: 
 
 ```json
 [  
@@ -44,7 +38,6 @@ IDs distribute so :
 - third source : ID 21-30,51-60;
 ```
 
-- Only point(url) exists for getting sorted data.
-- This point must make requests to all sources, to get them and to sort.
-- All errors have to be ignored. Timeout for every source - 2 seconds.
-- For randomness remote entrypoint can asleep - it allows to break request to it and check the API works correctly.
+- Only entrypoint(url) exists for getting sorted data.
+- The entrypoint must request all sources, get them and sort.
+- Errors have to be ignored. Timeout for every source is **2 seconds**.
