@@ -4,9 +4,6 @@ Test project #2
 Language: **Python**  
 Tools: **Aiohttp Framework, Docker**
 
-**WARNING!**
-This project is not for production! It's just example! Don't use it - or only your responsibility.
-
 Description
 ---------------
 
