@@ -44,6 +44,6 @@ class DomainsListForm(forms.Form):
             urls: list = redis_client.hmget('sites', sites_pk)
         except Exception:
             print(f'Error: {format_exc()}')
-            return None
+            return
 
         return set(urls)

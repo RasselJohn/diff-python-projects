@@ -1,29 +1,29 @@
 from exceptions import GameRuleException, NewGameException
 from game import Game
 
-g = Game()
+game = Game()
 
 while True:
-    g.render()
+    game.render()
 
     try:
-        g.step()
+        game.step()
     except GameRuleException:
         continue
     except NewGameException:
-        g = Game()
+        game = Game()
         continue
 
-    g.render()
+    game.render()
 
-    if g.is_end_game():
-        print(f'Win {1 if g.is_first_player_step else 2} player!')
+    if game.is_end_game():
+        print(f'Win {1 if game.is_first_player_step else 2} player!')
 
         is_new_game = input("New game(y/n)?")
         if is_new_game == 'y':
-            g = Game()
+            game = Game()
             continue
 
         break
 
-    g.change_player()
+    game.change_player()

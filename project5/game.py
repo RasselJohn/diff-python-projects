@@ -1,5 +1,5 @@
 import os
-
+import typing as T
 from exceptions import GameRuleException, NewGameException
 
 
@@ -12,15 +12,17 @@ class Game:
     WIN_SEQ_FOR_SECOND_PLAYER = 'o' * 4
 
     def __init__(self):
-        self.occupied_cells = {
+        self.occupied_cells: T.Dict[int, list] = {
             column: [' ' for _ in range(self.ROWS)]
             for column in range(self.COLUMNS)
         }
-        self.is_first_player_step = True
+
+        self.is_first_player_step: bool = True
+        self.last_inserted_pos = tuple()
         self.last_error = ''
 
     def step(self):
-        column = self.get_column_input()
+        column: int = self.get_column_input()
         column -= 1  # it's easier for calculations
 
         if not (0 <= column < self.COLUMNS):
@@ -31,14 +33,11 @@ class Game:
             self.last_error = 'Column is fulled.'
             raise GameRuleException
 
-        occupied_column = self.occupied_cells[column]
-        for i in range(len(occupied_column) - 1, -1, -1):
-            if occupied_column[i] == ' ':
-                if self.is_first_player_step:
-                    occupied_column[i] = 'x'
-                else:
-                    occupied_column[i] = 'o'
-
+        occupied_column: T.List[str] = self.occupied_cells[column]
+        for row in range(len(occupied_column) - 1, -1, -1):
+            if occupied_column[row] == ' ':
+                occupied_column[row] = 'x' if self.is_first_player_step else 'o'
+                self.last_inserted_pos = (column, row)
                 break
 
     def render(self):
@@ -62,8 +61,8 @@ class Game:
             print(self.last_error)
             self.last_error = ''
 
-    def is_end_game(self):
-        win_sequence = self.WIN_SEQ_FOR_FIRST_PLAYER if self.is_first_player_step else self.WIN_SEQ_FOR_SECOND_PLAYER
+    def is_end_game(self) -> T.Optional[bool]:
+        win_sequence: str = self.WIN_SEQ_FOR_FIRST_PLAYER if self.is_first_player_step else self.WIN_SEQ_FOR_SECOND_PLAYER
 
         # check win sequence
         for i in self.occupied_cells.values():
@@ -77,9 +76,71 @@ class Game:
             if win_sequence in joined_cells:
                 return True
 
-    def get_column_input(self):
+        # check diagonals
+        column, row = self.last_inserted_pos
+        curr_player_sym = 'x' if self.is_first_player_step else 'o'
+
+        sym_counts = 1  # current symbol is in suit
+        curr_column = column - 1
+        curr_row = row - 1
+
+        # move left and up
+        while curr_column >= 0 and curr_row >= 0:
+            # if symbol does not belong player
+            if curr_player_sym != self.occupied_cells[curr_column][curr_row]:
+                break
+
+            sym_counts += 1
+            curr_column -= 1
+            curr_row -= 1
+
+        curr_column = column + 1
+        curr_row = row + 1
+
+        # move right and down
+        while curr_column < self.COLUMNS and curr_row < self.ROWS:
+            if curr_player_sym != self.occupied_cells[curr_column][curr_row]:
+                break
+
+            sym_counts += 1
+            curr_column += 1
+            curr_row += 1
+
+        if sym_counts >= 4:
+            return True
+
+        # reset it - because it must count symbols by another diagonal
+        sym_counts = 1
+        curr_column = column + 1
+        curr_row = row - 1
+
+        # move right and up
+        while curr_column < self.COLUMNS and curr_row >= 0:
+            if curr_player_sym != self.occupied_cells[curr_column][curr_row]:
+                break
+
+            sym_counts += 1
+            curr_column += 1
+            curr_row -= 1
+
+        curr_column = column - 1
+        curr_row = row + 1
+
+        # move left and down
+        while curr_column >= 0 and curr_row < self.ROWS:
+            if curr_player_sym != self.occupied_cells[curr_column][curr_row]:
+                break
+
+            sym_counts += 1
+            curr_column -= 1
+            curr_row += 1
+
+        if sym_counts >= 4:
+            return True
+
+    def get_column_input(self) -> int:
         try:
-            user_input = input(f'Enter column(1-{self.COLUMNS}),"n" - new game, "q" - for exit: ')
+            user_input: str = input(f'Enter column(1-{self.COLUMNS}),"n" - new game, "q" - for exit: ')
 
             if user_input == 'n':
                 raise NewGameException

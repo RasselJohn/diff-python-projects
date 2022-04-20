@@ -12,7 +12,7 @@ async def test_entity_remove_success(
         db_fx: MongoClient,
         user_fx: dict,
         auth_token_fx: dict
-) -> NoReturn:
+):
     login: str = user_fx.get('login')
     entity_id: ObjectId = db_fx[DbCollection.ENTITY].insert_one(
         {'login': login, 'data': {'data1': 123, 'data2': 'qwe'}}
@@ -32,7 +32,7 @@ async def test_entity_remove_not_owner(
         aiohttp_client_fx: Any,
         db_fx: MongoClient,
         auth_token_fx: dict
-) -> NoReturn:
+):
     entity_id: ObjectId = db_fx[DbCollection.ENTITY].insert_one({'login': 'some_test_user', 'data': 'qwe'}).inserted_id
 
     # but auth_token_fx is for other user

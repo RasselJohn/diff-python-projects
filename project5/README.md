@@ -1,13 +1,14 @@
 Test project #5
 =================
+
 Language: **Python**  
 
-Task:
+Task
 ------
-Connect4 Game. 
-Clean Python code - because it's hard ~~core~~ code)).
 
-**Attention!** Win are captured by rows and columns! Diagonals are not checked.
+Connect4 Game.
+Clean Python code.
+Win are captured by rows, columns and diagonals too.
 
 Run in console:
-`python main.py` 
+`python main.py`

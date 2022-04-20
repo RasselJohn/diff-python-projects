@@ -11,7 +11,7 @@ async def test_entity_list_success(
         aiohttp_client_fx: Any,
         user_fx: dict,
         auth_token_fx: dict
-) -> NoReturn:
+):
     login: str = user_fx.get('login')
     db_fx[DbCollection.ENTITY].insert_many(
         [{'login': login, 'data': {'data1': 123, 'data2': 'qwe'}} for _ in range(3)]

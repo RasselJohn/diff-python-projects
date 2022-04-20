@@ -1,5 +1,5 @@
-from django.conf.urls import url, include
+from django.conf.urls import path, include
 
 urlpatterns = [
-    url(r'api/', include('src.apps.api.urls')),
+    path('api/', include('src.apps.api.urls')),
 ]

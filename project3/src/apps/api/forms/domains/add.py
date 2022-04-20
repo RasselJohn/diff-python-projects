@@ -44,7 +44,7 @@ class DomainsAddForm(forms.Form):
 
         except Exception:
             print(f'Error: {format_exc()}')
-            return None
+            return
 
         return timestamp
 

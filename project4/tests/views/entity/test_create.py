@@ -11,7 +11,7 @@ async def test_entity_create_success(
         db_fx: MongoClient,
         user_fx: dict,
         auth_token_fx: dict
-) -> NoReturn:
+) -> None:
     data = {'data1': 123, 'data2': 'qwe'}
     response: Response = await aiohttp_client_fx.post(
         aiohttp_client_fx.app.router['entity-create'].url_for(),
@@ -25,7 +25,7 @@ async def test_entity_create_success(
     assert db_fx[DbCollection.ENTITY].find_one({'login': user_fx.get('login')}).get('data') == data
 
 
-async def test_entity_create_unauthorized(aiohttp_client_fx: Any) -> NoReturn:
+async def test_entity_create_unauthorized(aiohttp_client_fx: Any) -> None:
     response: Response = await aiohttp_client_fx.post(aiohttp_client_fx.app.router['entity-create'].url_for())
 
     assert response.status == 401
