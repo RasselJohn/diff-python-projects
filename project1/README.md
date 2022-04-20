@@ -1,38 +1,47 @@
-Test project #1
+Test project #2
 =================
 
-Languages: **Python, JS**  
-Tools: **Django Framework, Docker**
+Language: **Python**  
+Tools: **Aiohttp Framework, Docker**
 
 **WARNING!**
 This project is not for production! It's just example! Don't use it - or only your responsibility.
 
----
-**Running:**
+Description
+---------------
 
-Project will be by url: <http://localhost:8000>.  
-Superuser login: **admin**, password: **admin**.
+Data loads from current server (3 requests) with waiting period 2 seconds.  
 
-**Local:**
+For checking: run server.py in console and **open in browser by address <http://localhost:8080>**.  
 
-- Migrate db:  
-```python manage.py migrate```
+For checking thorough **Docker** (run in current directory):  `docker-compose -f deploy/docker-compose.yml up --build`
 
-- Add fixtures with superuser auth data:  
-```python manage.py loaddata fixtures.json```
+Data will be sorted and printed (in console and on main page of site).
 
-- Run server:
-```python manage.py runserver 0.0.0.0:8000```
-
-**Docker:**
-
-```docker-compose -f deploy/docker-compose.yml up --build```  
-
----
 Task
 ---------------
 
-- Pages: login + list of users pages;
-- Operations: add/remove/edit user and changing his permissions - full access or only reading access;
-- Use JS;
-- Use ORM and raw SQL.
+- There exist 3 remote sources of data
+Data is array, where every element consists of id and text field.
+Example:
+
+```json
+[  
+    {“id”:1, ”name”:”Test 1”}, 
+    {“id”:2,”name”:”Test 2”} 
+]
+```
+
+Access to sources is thorough HTTP.
+IDs distribute so :
+
+```json
+- first source : ID 1-10,31-40;
+- second source: ID 11-20,41-50;
+- third source : ID 21-30,51-60;
+```
+
+- Only point(url) exists for getting sorted data.
+- This point must make requests to all sources, to get them and to sort.
+- All errors have to be ignored. Timeout for every source - 2 seconds.
+- For randomness remote entrypoint can asleep - it allows to break request to it and check the API works correctly.
