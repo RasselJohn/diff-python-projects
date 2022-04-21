@@ -9,10 +9,10 @@ from src.utils import get_password_hash
 
 
 async def test_link_generate_success(
-        aio_db_fx: AsyncIOMotorDatabase,
-        aiohttp_client_fx: Any,
-        user_fx: dict,
-        auth_token_fx: dict
+    aiohttp_client_fx,
+    aio_db_fx: AsyncIOMotorDatabase,
+    user_fx: dict,
+    auth_token_fx: dict
 ):
     new_owner = 'test_new_owner'
     await aio_db_fx[DbCollection.USER].insert_one({
@@ -36,7 +36,7 @@ async def test_link_generate_success(
     assert await aio_db_fx[DbCollection.LINK].count_documents({'new_owner': new_owner, 'entity_id': entity_id}) == 1
 
 
-async def test_link_generate_absent_param(aiohttp_client_fx: Any, auth_token_fx: dict):
+async def test_link_generate_absent_param(aiohttp_client_fx, auth_token_fx: dict):
     response: Response = await aiohttp_client_fx.post(
         aiohttp_client_fx.app.router['link-generate'].url_for(),
         headers=auth_token_fx,
@@ -51,11 +51,11 @@ async def test_link_generate_absent_param(aiohttp_client_fx: Any, auth_token_fx:
 
 
 async def test_link_generate_absent_user(
-        aiohttp_client_fx: Any,
+        aiohttp_client_fx,
         aio_db_fx: AsyncIOMotorDatabase,
         user_fx: dict,
         auth_token_fx: dict
-) -> NoReturn:
+):
     new_owner = 'absent_user'
     entity = await aio_db_fx[DbCollection.ENTITY].insert_one({
         'login': user_fx.get('login'), 'data': {}
@@ -76,10 +76,10 @@ async def test_link_generate_absent_user(
 
 
 async def test_link_generate_has_not_permission_on_entity(
+        aiohttp_client_fx,
         aio_db_fx: AsyncIOMotorDatabase,
-        aiohttp_client_fx: Any,
         auth_token_fx: dict
-) -> NoReturn:
+):
     real_owner = 'real_owner'
     new_owner = 'new_owner'
     entity = await aio_db_fx[DbCollection.ENTITY].insert_one({'login': real_owner, 'data': {}})

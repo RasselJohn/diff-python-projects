@@ -37,19 +37,14 @@ async def aio_db_fx() -> AsyncIOMotorDatabase:
 
 
 @pytest.fixture
-async def user_fx(request: SubRequest, aio_db_fx: AsyncIOMotorDatabase) -> dict:
+async def user_fx(aio_db_fx: AsyncIOMotorDatabase) -> dict:
     params_data = {'login': 'test', 'password': get_password_hash('test')}
     await aio_db_fx[DbCollection.USER].insert_one(params_data.copy())
-
-    async def remove_user():
-        await aio_db_fx[DbCollection.USER].delete_one(params_data)
-
-    request.addfinalizer(remove_user)
     return {'login': 'test', 'password': 'test'}
 
 
 @pytest.fixture
-async def auth_token_fx(request: SubRequest, aio_db_fx: AsyncIOMotorDatabase, user_fx: dict) -> dict:
+async def auth_token_fx(aio_db_fx: AsyncIOMotorDatabase, user_fx: dict) -> dict:
     auth_collection: AsyncIOMotorCollection = aio_db_fx[DbCollection.AUTH]
     login: str = user_fx.get('login')
     token = str(uuid4())
@@ -64,8 +59,4 @@ async def auth_token_fx(request: SubRequest, aio_db_fx: AsyncIOMotorDatabase, us
         upsert=True
     )
 
-    async def remove_auth() -> None:
-        await aio_db_fx[DbCollection.AUTH].delete_one({'login': login})
-
-    request.addfinalizer(remove_auth)
     return {'Authorization': token}

@@ -19,7 +19,6 @@ async def test_login_incorrect_password(aiohttp_client_fx):
         aiohttp_client_fx.app.router['login'].url_for(),
         json={'login': 'test', 'password': 'test1'}
     )
-
     assert response.status == HTTPStatus.UNAUTHORIZED
 
     response_data: dict = await response.json()
