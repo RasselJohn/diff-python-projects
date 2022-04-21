@@ -1,6 +1,6 @@
 # for local development
 # running from base directory: docker-compose -f deploy/docker-compose.yml up --build
-version: "3.7"
+version: "3.8"
 
 services:
   aiohttp:
@@ -13,16 +13,16 @@ services:
       - "8080:8080"
 
     links:
-      - mongo
+      - mongo_db
 
     environment:
-      - MONGO_HOST=mongo # container_name of mongo !
+      - MONGO_HOST=mongo_db # container_name of mongo !
 
     command: "python main.py"
 
-  mongo:
-    container_name: mongo
-    hostname: mongo
+  mongo_db:
+    # container_name: mongo
+    # hostname: mongo
     image: mongo
     ports:
       - "27017:27017"

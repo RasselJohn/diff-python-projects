@@ -3,7 +3,7 @@ from http import HTTPStatus
 from typing import Optional
 
 from aiohttp import web
-from pymongo.collection import Collection
+from motor.motor_asyncio import AsyncIOMotorCollection
 
 from src.enums import DbCollection
 from src.utils import require_auth
@@ -20,8 +20,8 @@ class ReceiveLinkView(web.View):
             )
 
         new_owner: str = self.request.user.get('login')
-        links: Collection = self.request.app.get('MONGO_DB')[DbCollection.LINK]
-        link = links.find_one({'new_owner': new_owner, '_id': ObjectId(link_id)})
+        links: AsyncIOMotorCollection = self.request.app.get('MONGO_DB')[DbCollection.LINK]
+        link = await links.find_one({'new_owner': new_owner, '_id': ObjectId(link_id)})
         if not link:
             return web.json_response(
                 {'error': f'Link with id={link_id} does not exist.'},
@@ -29,13 +29,13 @@ class ReceiveLinkView(web.View):
             )
 
         # set new owner for entity
-        entities: Collection = self.request.app.get('MONGO_DB')[DbCollection.ENTITY]
-        entities.update_one(
+        entities: AsyncIOMotorCollection = self.request.app.get('MONGO_DB')[DbCollection.ENTITY]
+        await entities.update_one(
             {'_id': ObjectId(link.get('entity_id'))},
             {'$set': {'login': new_owner}},
             upsert=True
         )
 
         # remove used link
-        links.delete_one({'_id': ObjectId(link_id)})
+        await links.delete_one({'_id': ObjectId(link_id)})
         return web.json_response({'message': 'Object was received.'}, status=HTTPStatus.OK)

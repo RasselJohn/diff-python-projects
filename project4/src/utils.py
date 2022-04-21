@@ -6,7 +6,7 @@ from json.decoder import JSONDecodeError
 from typing import Any, Callable, Optional
 
 from aiohttp import web, web_request
-from pymongo.collection import Collection
+from motor.motor_asyncio import AsyncIOMotorCollection
 
 from src.enums import DbCollection
 
@@ -19,8 +19,8 @@ def require_auth(class_method: Callable[[Any], Any]) -> Callable[[Any], Any]:
 
         if auth_token:
             # get document by token from db - document also must content user login and token expiration.
-            auth_collection: Collection = request.app.get('MONGO_DB')[DbCollection.AUTH]
-            authentication_doc: Optional[dict] = auth_collection.find_one({'token': auth_token})
+            auth_collection: AsyncIOMotorCollection = request.app.get('MONGO_DB')[DbCollection.AUTH]
+            authentication_doc: Optional[dict] = await auth_collection.find_one({'token': auth_token})
 
             if authentication_doc:
                 if datetime.now() < authentication_doc.get('expire'):
@@ -28,7 +28,7 @@ def require_auth(class_method: Callable[[Any], Any]) -> Callable[[Any], Any]:
                     return await class_method(*args, **kwargs)
                 else:
                     # expired token must be removed
-                    auth_collection.delete_one({'token': auth_token})
+                    await auth_collection.delete_one({'token': auth_token})
 
         return web.json_response(
             {'error': 'Access denied. Perhaps auth token was expired. Please, log in.'},

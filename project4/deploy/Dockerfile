@@ -3,9 +3,9 @@
 FROM python:3.10-slim-buster
 ENV PYTHONUNBUFFERED 1
 
-RUN mkdir -R /home/app/config
+RUN mkdir -p /home/app/config
 
-ADD config/requirements.txt /home/app/config
+COPY config/requirements.txt /home/app/config
 
 RUN pip install -r /home/app/config/requirements.txt
 

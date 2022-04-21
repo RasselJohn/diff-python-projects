@@ -1,7 +1,7 @@
 from http import HTTPStatus
 
 from aiohttp import web
-from pymongo.collection import Collection
+from motor.motor_asyncio import AsyncIOMotorCollection
 
 from src.enums import DbCollection
 from src.utils import require_auth, get_request_json
@@ -18,7 +18,7 @@ class CreateEntityView(web.View):
                 status=HTTPStatus.BAD_REQUEST
             )
 
-        entities: Collection = self.request.app.get('MONGO_DB')[DbCollection.ENTITY]
-        entities.insert_one({'login': self.request.user.get('login'), 'data': data})
+        entities: AsyncIOMotorCollection = self.request.app.get('MONGO_DB')[DbCollection.ENTITY]
+        await entities.insert_one({'login': self.request.user.get('login'), 'data': data})
 
         return web.json_response({'message': 'Item was added successfully!'}, status=HTTPStatus.OK)

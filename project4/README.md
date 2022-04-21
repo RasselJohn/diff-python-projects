@@ -19,13 +19,11 @@ Entrypoints:
 
 **EXAMPLES(!)** of API requests are in `main.http` file.
 
-
 Some assumptions
 ------
 
 - Auth token is just uuid4 and must be in *header* of request: {'Authorization': token_value}
 - Login is unique - so references between tables use it, instead of using DBRef.
-
 
 Running
 ------
@@ -37,12 +35,12 @@ After running service will be on `http://localhost:8080/`
 
 Tests
 -------
+
 In current directory: `pytest -c config/pytest.ini`.
-
-
 
 Tables
 -------
+
 By default all have `_id` field
 
 - name: `User`, fields: `login, password`;

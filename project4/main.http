@@ -3,8 +3,8 @@ POST http://localhost:8080/registration
 Content-Type: application/json
 
 {
-  "login": "john",
-  "password": "password"
+  "login": "john5",
+  "password": "password5"
 }
 
 ### login
@@ -12,8 +12,8 @@ POST http://localhost:8080/login
 Content-Type: application/json
 
 {
-  "login": "john2",
-  "password": "password2"
+  "login": "john5",
+  "password": "password5"
 }
 
 ### create item (entity) - all fields in json will be added to 'data' field in entity
@@ -50,4 +50,3 @@ Content-Type: application/json
 GET http://localhost:8080/get?link_id=6050bcdf7b6b8cad03e284c9
 Authorization: 14b71d88-fed6-4f06-aa6a-18f6f7b0f60e
 Content-Type: application/json
-
