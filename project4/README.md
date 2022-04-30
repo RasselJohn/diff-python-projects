@@ -28,7 +28,7 @@ Some assumptions
 Running
 ------
 
-- Straight way: `python manage.py`
+- Straight way: `python manage.py` (**Mongo DB** must be run with default params)
 - Docker way: `docker-compose -f deploy/docker-compose.yml up --build`.
 
 After running service will be on `http://localhost:8080/`  
