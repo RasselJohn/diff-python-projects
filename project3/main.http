@@ -14,5 +14,5 @@ Content-Type: application/json
 ### Get unique visited domains for time period.
 # 'date_from' can be taken from api/visited-links/ (param 'timestamp')
 # 'date_to' - just add some seconds to date_from
-GET http://localhost:8000/api/visited-domains/?date_from=1617289946&date_to=1617289949
+GET http://localhost:8000/api/visited-domains/?date_from=1651409981&date_to=1651409982
 Content-Type: application/json

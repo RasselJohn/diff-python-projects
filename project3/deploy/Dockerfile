@@ -3,7 +3,7 @@
 FROM python:3.10-slim-buster
 ENV PYTHONUNBUFFERED 1
 
-RUN mkdir -R /home/app/config && mkdir -p /logs /media /static
+RUN mkdir -p /home/app/config && mkdir -p /logs /media /static
 
 ADD requirements.txt /home/app/
 

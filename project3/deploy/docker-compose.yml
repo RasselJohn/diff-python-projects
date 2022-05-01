@@ -3,7 +3,8 @@
 version: "3.8"
 
 services:
-  django: &django
+  django:
+    &django
     build:
       context: ../
       dockerfile: deploy/Dockerfile
@@ -18,7 +19,9 @@ services:
       - DEBUG=False
       - REDIS_HOST=redis
 
-    command:  python manage.py runserver 0.0.0.0:8000
+    command: python manage.py runserver 0.0.0.0:8000
 
   redis:
-    image: redis:6.0
+    image: redis:7.0-alpine
+    ports:
+      - "6379:6379"

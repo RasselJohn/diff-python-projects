@@ -5,7 +5,6 @@ from typing import Callable, Any
 from uuid import uuid4
 
 import pytest
-from _pytest.fixtures import SubRequest
 from aiohttp import web
 from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorDatabase, AsyncIOMotorCollection
 

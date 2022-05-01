@@ -37,13 +37,13 @@ class DomainsListForm(forms.Form):
     def get_domains(self) -> Optional[set]:
         date_from: int = self.cleaned_data.get('date_from')
         date_to: int = self.cleaned_data.get('date_to')
-
+        sites_pk = 'qwe'
         try:
             redis_client = redis.Redis(host=settings.REDIS_HOST, **settings.REDIS_CONFIG)
             sites_pk: set = redis_client.zrangebyscore('timestamps', date_from, date_to)
-            urls: list = redis_client.hmget('sites', sites_pk)
+            urls = redis_client.hmget('sites', sites_pk) if sites_pk else []
         except Exception:
-            print(f'Error: {format_exc()}')
+            print(f"Error:", sites_pk, f"{format_exc()}")
             return
 
         return set(urls)

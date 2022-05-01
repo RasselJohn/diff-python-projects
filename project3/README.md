@@ -6,9 +6,11 @@ Tools: **Django Framework, Redis, Docker**
 
 Running
 ---------------
+
 Service will be on url: <http://localhost:8000/>
 
 **Local:**
+
 - Create directory `logs` (path is `LOG_DIR` in `settings.py`)
 - Run `Redis`(default settings):
 - Run server: `python manage.py runserver`
