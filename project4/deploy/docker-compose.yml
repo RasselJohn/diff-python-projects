@@ -16,7 +16,7 @@ services:
       - mongo_db
 
     environment:
-      - MONGO_HOST=mongo_db # container_name of mongo!
+      - MONGO_HOST=mongo_db
 
     command: "python main.py"
 
