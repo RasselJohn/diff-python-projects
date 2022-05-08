@@ -1,25 +1,25 @@
 import json
 from typing import Optional
 
-from django.http import JsonResponse, HttpRequest
 from django.utils.translation import gettext_lazy as _
-from django.views import View
+from rest_framework import status
+from rest_framework.request import Request
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
-from src.apps.api.forms import DomainsAddForm
-from src.apps.api.utils import get_form_errors
+from src.apps.api.serializers import DomainsAddSerializer
 
 
-class DomainsAddView(View):
-    def post(self, request: HttpRequest) -> JsonResponse:
-        form = DomainsAddForm(json.loads(request.body))
-        if not form.is_valid():
-            return JsonResponse(get_form_errors(form), status=400)
+class DomainsAddView(APIView):
+    def post(self, request: Request) -> Response:
+        serializer = DomainsAddSerializer(json.loads(request.body))
+        serializer.is_valid(raise_exception=True)
 
-        timestamp: Optional[float] = form.save_urls()
+        timestamp: Optional[float] = serializer.save_urls()
         if timestamp is None:
-            return JsonResponse({'status': _('Ошибка сервера. Пожалуйста, обратитесь позже.')}, status=502)
+            return Response(
+                {'status': _('Ошибка сервера. Пожалуйста, обратитесь позже.')},
+                status=status.HTTP_502_BAD_GATEWAY
+            )
 
-        return JsonResponse({
-            'timestamp': timestamp,  # need for testing
-            'status': 'ok'
-        })
+        return Response({'timestamp': timestamp})

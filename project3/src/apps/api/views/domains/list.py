@@ -1,21 +1,24 @@
 from typing import Optional
 
-from django.http import JsonResponse, HttpRequest
 from django.utils.translation import gettext_lazy as _
-from django.views import View
+from rest_framework import status
+from rest_framework.generics import ListAPIView
+from rest_framework.request import Request
+from rest_framework.response import Response
 
-from src.apps.api.forms import DomainsListForm
-from src.apps.api.utils import get_form_errors
+from src.apps.api.serializers import DomainsListSerialilzer
 
 
-class DomainsListView(View):
-    def get(self, request: HttpRequest) -> JsonResponse:
-        form = DomainsListForm(request.GET.copy())
-        if not form.is_valid():
-            return JsonResponse(get_form_errors(form), status=400)
+class DomainsListView(ListAPIView):
+    def get(self, request: Request, *args, **kwargs) -> Response:
+        serializer = DomainsListSerialilzer(request.GET.copy())
+        serializer.is_valid(raise_exception=True)
 
-        result: Optional[set] = form.get_domains()
+        result: Optional[set] = serializer.get_domains()
         if result is None:
-            return JsonResponse({'status': _('Ошибка сервера. Пожалуйста, обратитесь позже.')}, status=502)
+            return Response(
+                {'status': _('Ошибка сервера. Пожалуйста, обратитесь позже.')},
+                status=status.HTTP_502_BAD_GATEWAY
+            )
 
-        return JsonResponse({'domains': list(result), 'status': 'ok'})
+        return Response({'domains': list(result)})

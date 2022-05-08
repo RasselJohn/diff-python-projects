@@ -5,6 +5,7 @@ import redis
 from django.conf import settings
 from django.test import override_settings
 from django.urls import reverse_lazy
+from rest_framework import status
 
 from src.apps.api.tests.domains.base import TestDomainBaseView
 
@@ -14,13 +15,13 @@ class TestDomainAddView(TestDomainBaseView):
 
     def test_empty_request(self) -> None:
         response: Any = self.client.post(self.url, content_type=self.content_type)
-        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertIn('status', json.loads(response.content))
 
     @override_settings(REDIS_CONFIG=settings.TEST_REDIS_CONFIG)
     def test_correct_request(self) -> None:
         response: Any = self.client.post(self.url, data=json.dumps(self.test_links), content_type=self.content_type)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         result: dict = json.loads(response.content)
         self.assertIn('status', result)

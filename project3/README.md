@@ -2,7 +2,7 @@ Test project #3
 =================
 
 Language: **Python**  
-Tools: **Django Framework, Redis, Docker**
+Tools: **Django Rest Framework, Redis, Docker**
 
 Running
 ---------------

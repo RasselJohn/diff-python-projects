@@ -4,26 +4,26 @@ from traceback import format_exc
 from typing import Optional
 
 import redis
-from django import forms
 from django.conf import settings
-from django.contrib.postgres.forms import SimpleArrayField
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+from rest_framework import serializers
 
 from src.apps.api.utils import get_base_domain
 
 log = logging.getLogger('django.request')
 
 
-class DomainsAddForm(forms.Form):
-    links = SimpleArrayField(
-        forms.CharField(max_length=100),
-        min_length=1, label=_('Список урлов'),
+class DomainsAddSerializer(serializers.Serializer):
+    links = serializers.ListField(
+        child=serializers.CharField(max_length=100),
+        min_length=1,
+        label=_('Список урлов'),
         error_messages={'required': _('Список урлов не задан.'), 'invalid': _('Список урлов некорректен.')}
     )
 
     def save_urls(self) -> Optional[int]:
-        links: list = self.cleaned_data.get('links')
+        links: list = self.validated_data.get('links')
 
         try:
             timestamp: int = math.floor(timezone.now().timestamp())
@@ -37,7 +37,7 @@ class DomainsAddForm(forms.Form):
             redis_client.incr('curr_id', len(urls))
 
             # save sites in hash table -> pk:domain
-            redis_client.hmset('sites', urls)
+            redis_client.hset('sites', mapping=urls)
 
             # save timestamps in sorted set -> timestamps:sites_pk
             redis_client.zadd('timestamps', {pk: timestamp for pk in urls.keys()}, nx=True)

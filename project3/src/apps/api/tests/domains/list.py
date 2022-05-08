@@ -6,6 +6,7 @@ import redis
 from django.conf import settings
 from django.test import override_settings
 from django.urls import reverse_lazy
+from rest_framework import status
 
 from src.apps.api.tests.domains.base import TestDomainBaseView
 
@@ -15,12 +16,12 @@ class TestDomainListView(TestDomainBaseView):
 
     def test_empty_request(self) -> None:
         response: Any = self.client.get(self.url)
-        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertIn('status', json.loads(response.content))
 
     def test_incorrect_periods(self) -> None:
         response: Any = self.client.get(self.url, data={'date_from': 100, 'date_to': 10}, )
-        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertIn('status', json.loads(response.content))
 
     @override_settings(REDIS_CONFIG=settings.TEST_REDIS_CONFIG)
@@ -31,7 +32,7 @@ class TestDomainListView(TestDomainBaseView):
             data=json.dumps(self.test_links),
             content_type=self.content_type
         )
-        self.assertEqual(addition_response.status_code, 200)
+        self.assertEqual(addition_response.status_code, status.HTTP_200_OK)
 
         result: dict = json.loads(addition_response.content)
         timestamp: int = result.get('timestamp')
@@ -44,7 +45,7 @@ class TestDomainListView(TestDomainBaseView):
             data={'date_from': date_from, 'date_to': date_to},
             content_type=self.content_type
         )
-        self.assertEqual(getting_response.status_code, 200)
+        self.assertEqual(getting_response.status_code, status.HTTP_200_OK)
 
         result: dict = json.loads(getting_response.content)
         self.assertIn('domains', result)
