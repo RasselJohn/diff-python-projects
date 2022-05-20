@@ -1,8 +1,15 @@
-import asyncio
 from typing import Generator, Callable, Any
 
+import asyncio
+from yarl import URL
+
 # in seconds
-MAX_REQUEST_TIMEOUT = 3
+REQUEST_TIMEOUT = 5
+
+# in seconds
+# if it would be more REQUEST_TIMEOUT - timeout can happen
+MAX_RANDOM_TIMEOUT = 4
+
 
 def generate_remote_data(*args) -> Generator[None, dict, None]:
     for x, y in args:
@@ -10,12 +17,11 @@ def generate_remote_data(*args) -> Generator[None, dict, None]:
             yield {'id': i, 'name ': 'Test {}'.format(i)}
 
 
-def set_timeout(delay: int) -> Callable[..., Any]:
+def set_timeout(timeout: int) -> Callable[..., Any]:
     def wrap(func) -> Callable[..., Any]:
-
         async def sub_wrap(*args) -> None:
             try:
-                await asyncio.wait_for(func(*args), timeout=delay)
+                await asyncio.wait_for(func(*args), timeout=timeout)
             except asyncio.TimeoutError:
                 print("Timeout! Data don't load!")
             except Exception:
