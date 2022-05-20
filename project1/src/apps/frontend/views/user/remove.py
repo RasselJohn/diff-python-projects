@@ -8,6 +8,7 @@ from django.views import View
 class UserRemoveView(View):
     template_name = 'user-remove.html'
 
+    # get user before remove
     def get(self, request: HttpRequest, user_id: str) -> HttpResponse:
         user: User = get_object_or_404(User, pk=user_id)
         return render(request, self.template_name, {'user_id': user_id, 'user_name': user.username})

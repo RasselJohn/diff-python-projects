@@ -1,4 +1,4 @@
 from .list import UserListView
-from .edit import UserEditView
+from .update import UserEditView
 from .remove import UserRemoveView
-from .add import UserAddView
+from .create import UserCreateView

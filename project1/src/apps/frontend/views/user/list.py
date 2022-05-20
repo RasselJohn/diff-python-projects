@@ -6,7 +6,7 @@ from django.views import View
 
 
 class UserListView(View):
-    template_name = 'users.html'
+    template_name = 'users-list.html'
 
     def get(self, request: HttpRequest) -> HttpResponse:
         users: RawQuerySet = User.objects.raw(

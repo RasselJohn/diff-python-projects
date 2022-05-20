@@ -1,3 +1,3 @@
 from .login import LoginForm
-from .user.add import UserAddForm
-from .user.edit import UserEditForm
+from .user.create import UserCreateForm
+from .user.update import UserUpdateForm

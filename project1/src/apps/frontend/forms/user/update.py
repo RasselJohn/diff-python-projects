@@ -5,7 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from src.apps.frontend.utils import is_valid_password, check_exist_username, check_exist_email
 
 
-class UserEditForm(forms.Form):
+class UserUpdateForm(forms.Form):
     first_name = forms.CharField(max_length=30, label=_('Имя'))
 
     last_name = forms.CharField(max_length=150, label=_('Фамилия'))
@@ -25,10 +25,10 @@ class UserEditForm(forms.Form):
     is_staff = forms.BooleanField(label=_('Полные права ?'), required=False)
 
     def __init__(self, user, *args, **kwargs):
-        super(UserEditForm, self).__init__(*args, **kwargs)
+        super(UserUpdateForm, self).__init__(*args, **kwargs)
         self.user = user
 
-    def clean_email(self):
+    def clean_email(self) -> str:
         email: str = self.cleaned_data.get('email')
 
         # if email was changed
@@ -48,7 +48,7 @@ class UserEditForm(forms.Form):
 
         return username
 
-    def clean(self):
+    def clean(self) -> dict:
         password: str = self.cleaned_data.get('password')
         password_repeat: str = self.cleaned_data.get('password_repeat')
         if password or password_repeat:
@@ -56,7 +56,7 @@ class UserEditForm(forms.Form):
 
         return self.cleaned_data
 
-    def edit_user(self) -> None:
+    def update(self):
         user: User = self.user
         user.first_name = self.cleaned_data.get('first_name')
         user.last_name = self.cleaned_data.get('last_name')
@@ -64,7 +64,7 @@ class UserEditForm(forms.Form):
         user.email = self.cleaned_data.get('email')
         user.is_staff = self.cleaned_data.get('is_staff', False)
 
-        password = self.cleaned_data.get('password')
+        password: str = self.cleaned_data.get('password')
         if password:
             user.set_password(password)
 

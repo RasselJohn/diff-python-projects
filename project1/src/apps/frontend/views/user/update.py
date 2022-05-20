@@ -4,12 +4,12 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import View
 
-from src.apps.frontend.forms import UserEditForm
+from src.apps.frontend.forms import UserUpdateForm
 from src.apps.frontend.utils import get_form_errors
 
 
 class UserEditView(View):
-    template_name = 'user-edit.html'
+    template_name = 'user-update.html'
 
     def get(self, request: HttpRequest, user_id: str) -> HttpResponse:
         user: User = get_object_or_404(User, pk=user_id)
@@ -17,10 +17,10 @@ class UserEditView(View):
 
     def post(self, request: HttpRequest, user_id: str) -> JsonResponse:
         user: User = get_object_or_404(User, pk=user_id)
-        form = UserEditForm(user, request.POST.copy())
+        form = UserUpdateForm(user, request.POST.copy())
 
         if not form.is_valid():
             return JsonResponse(get_form_errors(form))
 
-        form.edit_user()
+        form.update()
         return JsonResponse({'url': reverse_lazy('users')})

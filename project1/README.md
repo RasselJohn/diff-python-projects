@@ -20,13 +20,13 @@ Superuser login: **admin**, password: **admin**.
 
 **Docker:**
 
-```docker-compose -f deploy/docker-compose.yml up --build```  
+```docker-compose -f deploy/docker-compose.yml up --build```
 
 ---
 Task
 ---------------
 
 - Pages: login + list of users;
-- Operations: add/remove/edit user and changing his permissions - full access or only reading access;
+- All CRUD operations of user data(in particular, changing their permissions - full access or only reading access);
 - Use JS;
 - Use ORM and raw SQL.

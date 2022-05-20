@@ -9,16 +9,16 @@ def get_form_errors(form: Form) -> dict:
     return {'error': ''.join(errors_list)}
 
 
-def is_valid_password(password: str, password_repeat: str) -> None:
+def is_valid_password(password: str, password_repeat: str):
     if not password or not password_repeat or password != password_repeat:
         raise ValidationError(_('Пароли некорректны или несовпадают.'), code='invalid')
 
 
-def check_exist_email(email: str) -> None:
+def check_exist_email(email: str):
     if User.objects.filter(email__icontains=email).exists():
         raise ValidationError(_('Указанный email уже зарегистрирован в системе.'), code='duplicate')
 
 
-def check_exist_username(username: str) -> None:
+def check_exist_username(username: str):
     if User.objects.filter(username__icontains=username).exists():
         raise ValidationError(_('Указанный логин уже зарегистрирован в системе.'), code='duplicate')

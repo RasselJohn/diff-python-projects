@@ -5,7 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from src.apps.frontend.utils import is_valid_password, check_exist_email, check_exist_username
 
 
-class UserAddForm(forms.Form):
+class UserCreateForm(forms.Form):
     first_name = forms.CharField(
         max_length=30, label=_('Имя'), error_messages={'required': _('Имя не задано.')}
     )
@@ -36,7 +36,7 @@ class UserAddForm(forms.Form):
         max_length=20, label=_('Повтор пароля'), error_messages={'required': _('Повтор пароля не задан.')}
     )
 
-    is_staff = forms.BooleanField(label=_('Полные права ?'), required=False)
+    is_staff = forms.BooleanField(label=_('Полные права ?'), required=False, initial=False)
 
     def clean(self) -> dict:
         is_valid_password(
@@ -46,7 +46,7 @@ class UserAddForm(forms.Form):
 
         return self.cleaned_data
 
-    def add_user(self) -> None:
+    def create(self):
         User.objects.create_user(
             self.cleaned_data.get('username'),
             self.cleaned_data.get('email'),
@@ -54,5 +54,5 @@ class UserAddForm(forms.Form):
 
             first_name=self.cleaned_data.get('first_name'),
             last_name=self.cleaned_data.get('last_name'),
-            is_staff=self.cleaned_data.get('is_staff', False)
+            is_staff=self.cleaned_data.get('is_staff')
         )

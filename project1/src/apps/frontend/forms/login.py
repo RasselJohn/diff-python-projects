@@ -10,7 +10,8 @@ from django.utils.translation import gettext_lazy as _
 
 class LoginForm(forms.Form):
     username = forms.CharField(
-        label=_('Логин'), max_length=150,
+        label=_('Логин'),
+        max_length=150,
         error_messages={'required': _('Логин не задан.')}
     )
 
@@ -23,14 +24,13 @@ class LoginForm(forms.Form):
     def clean(self) -> dict:
         username: str = self.cleaned_data.get('username')
         password: str = self.cleaned_data.get('password')
-        user: Optional[User] = authenticate(
-            username=username, password=password)
+        user: Optional[User] = authenticate(username=username, password=password)
 
         if not user:
-            raise ValidationError(_('Введены неккоректные логин или пароль.'), code='invalid')
+            raise ValidationError(_('Введены некорректные логин или пароль.'), code='invalid')
 
         self.cleaned_data['user'] = user
         return self.cleaned_data
 
-    def login(self, request: HttpRequest) -> None:
+    def login(self, request: HttpRequest):
         login(request, self.cleaned_data.get('user'))
