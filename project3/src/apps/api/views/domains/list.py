@@ -11,7 +11,7 @@ from src.apps.api.serializers import DomainsListSerialilzer
 
 class DomainsListView(ListAPIView):
     def get(self, request: Request, *args, **kwargs) -> Response:
-        serializer = DomainsListSerialilzer(request.GET.copy())
+        serializer = DomainsListSerialilzer(data=request.GET.copy())
         serializer.is_valid(raise_exception=True)
 
         result: Optional[set] = serializer.get_domains()

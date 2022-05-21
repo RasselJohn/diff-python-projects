@@ -6,7 +6,7 @@ Content-Type: application/json
   "links": [
     "https://ya.ru",
     "https://ya.ru?q=123",
-    "qwe123.ru",
+    "example.com",
     "https://stackoverflow.com/questions/11828270/how-to-exit-the-vim-editor"
   ]
 }
@@ -14,5 +14,5 @@ Content-Type: application/json
 ### Get unique visited domains for time period.
 # 'date_from' can be taken from api/visited-links/ (param 'timestamp')
 # 'date_to' - just add some seconds to date_from
-GET http://localhost:8000/api/visited-domains/?date_from=1651409981&date_to=1651409982
+GET http://localhost:8000/api/visited-domains/?date_from=1651409981&date_to=1653128514
 Content-Type: application/json

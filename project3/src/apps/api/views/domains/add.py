@@ -12,7 +12,7 @@ from src.apps.api.serializers import DomainsAddSerializer
 
 class DomainsAddView(APIView):
     def post(self, request: Request) -> Response:
-        serializer = DomainsAddSerializer(json.loads(request.body))
+        serializer = DomainsAddSerializer(data=json.loads(request.body))
         serializer.is_valid(raise_exception=True)
 
         timestamp: Optional[float] = serializer.save_urls()

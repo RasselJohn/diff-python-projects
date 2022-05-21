@@ -1,7 +1,7 @@
 import logging
 import math
 from traceback import format_exc
-from typing import Optional
+from typing import List, Optional
 
 import redis
 from django.conf import settings
@@ -18,12 +18,12 @@ class DomainsAddSerializer(serializers.Serializer):
     links = serializers.ListField(
         child=serializers.CharField(max_length=100),
         min_length=1,
-        label=_('Список урлов'),
-        error_messages={'required': _('Список урлов не задан.'), 'invalid': _('Список урлов некорректен.')}
+        label=_('Список Url'),
+        error_messages={'required': _('Список Url не задан.'), 'invalid': _('Список Url некорректен.')}
     )
 
     def save_urls(self) -> Optional[int]:
-        links: list = self.validated_data.get('links')
+        links: List[str] = self.validated_data.get('links')
 
         try:
             timestamp: int = math.floor(timezone.now().timestamp())
@@ -50,12 +50,4 @@ class DomainsAddSerializer(serializers.Serializer):
 
     @classmethod
     def collect_unique_domains(cls, urls: list) -> set:
-        unique_urls = set()
-
-        for url in urls:
-            url: str = get_base_domain(url)
-
-            if url:
-                unique_urls.add(url)
-
-        return unique_urls
+        return {url for u in urls if (url := get_base_domain(u))}

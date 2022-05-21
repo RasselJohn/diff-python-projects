@@ -11,19 +11,14 @@ SECRET_KEY = 'qweqweqwe'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', True)
 
-ALLOWED_HOSTS = ['*']
-
-SITE_ID = 1
-
 # Application definition
 INSTALLED_APPS = [
+    'django.contrib.auth',
     'django.contrib.contenttypes',
     'src.apps.api',
 ]
 
-MIDDLEWARE = [
-    'django.middleware.common.CommonMiddleware',
-]
+MIDDLEWARE = ['django.middleware.common.CommonMiddleware']
 
 REDIS_HOST = os.environ.get('REDIS_HOST', '127.0.0.1')
 

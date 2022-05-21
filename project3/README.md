@@ -2,7 +2,7 @@ Test project #3
 =================
 
 Language: **Python**  
-Tools: **Django Rest Framework, Redis, Docker**
+Tools: **Django Rest Framework, Redis, Docker, Unittests**
 
 Running
 ---------------
@@ -17,7 +17,7 @@ Service will be on url: <http://localhost:8000/>
 - For tests (Redis must be running): `python manage.py test`
 
 **Docker:**  
- `docker-compose -f deploy/docker-compose.yml up --build`
+`docker-compose -f deploy/docker-compose.yml up --build`
 
 **Examples** of API requests are in file **[main.http](main.http)**
 

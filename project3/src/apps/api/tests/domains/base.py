@@ -2,7 +2,6 @@ from django.test import SimpleTestCase, Client
 
 
 class TestDomainBaseView(SimpleTestCase):
-    url = ''  # need to override in derived classes
     content_type = "application/json"
     client = Client()
     test_links = {
@@ -13,3 +12,6 @@ class TestDomainBaseView(SimpleTestCase):
             "https://stackoverflow.com/questions/11828270/how-to-exit-the-vim-editor"
         ]
     }
+
+    def get_url(self) -> str:
+        raise NotImplementedError
