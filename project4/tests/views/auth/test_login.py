@@ -32,8 +32,10 @@ async def test_login_absent_password(aiohttp_client_fx):
         json={'login': 'test'}
     )
 
-    assert response.status == HTTPStatus.UNAUTHORIZED
+    assert response.status == HTTPStatus.BAD_REQUEST
 
     response_data: dict = await response.json()
-    assert 'error' in response_data
-    assert response_data.get('error') == 'Login or password absent.'
+    assert isinstance(response_data, list)
+    assert len(response_data) == 1
+    assert response_data[0]['loc'][0] == 'password'
+    assert response_data[0]['msg'] == 'field required'

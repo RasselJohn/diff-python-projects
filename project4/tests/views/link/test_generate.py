@@ -1,5 +1,4 @@
 from http import HTTPStatus
-from typing import Any, NoReturn
 
 from aiohttp.web_response import Response
 from motor.motor_asyncio import AsyncIOMotorDatabase
@@ -9,10 +8,10 @@ from src.utils import get_password_hash
 
 
 async def test_link_generate_success(
-    aiohttp_client_fx,
-    aio_db_fx: AsyncIOMotorDatabase,
-    user_fx: dict,
-    auth_token_fx: dict
+        aiohttp_client_fx,
+        aio_db_fx: AsyncIOMotorDatabase,
+        user_fx: dict,
+        auth_token_fx: dict
 ):
     new_owner = 'test_new_owner'
     await aio_db_fx[DbCollection.USER].insert_one({
@@ -46,8 +45,10 @@ async def test_link_generate_absent_param(aiohttp_client_fx, auth_token_fx: dict
     assert response.status == HTTPStatus.BAD_REQUEST
 
     response_data: dict = await response.json()
-    assert 'error' in response_data
-    assert response_data.get('error').endswith('params are absent.')
+    assert isinstance(response_data, list)
+    assert len(response_data) == 1
+    assert response_data[0]['loc'][0] == 'item_id'
+    assert response_data[0]['msg'] == 'field required'
 
 
 async def test_link_generate_absent_user(

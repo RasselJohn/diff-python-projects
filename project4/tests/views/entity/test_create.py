@@ -12,7 +12,7 @@ async def test_entity_create_success(
         user_fx: dict,
         auth_token_fx: dict
 ):
-    data = {'data1': 123, 'data2': 'qwe'}
+    data = {'data': {'data1': 123, 'data2': 'qwe'}}
     response: Response = await aiohttp_client_fx.post(
         aiohttp_client_fx.app.router['entity-create'].url_for(),
         headers=auth_token_fx,
@@ -22,9 +22,9 @@ async def test_entity_create_success(
     assert response.status == HTTPStatus.OK
     assert 'message' in await response.json()
     assert await aio_db_fx[DbCollection.ENTITY].count_documents({'login': user_fx.get('login')}) == 1
-    
+
     item = await aio_db_fx[DbCollection.ENTITY].find_one({'login': user_fx.get('login')})
-    assert item.get('data') == data
+    assert item.get('data') == data['data']
 
 
 async def test_entity_create_unauthorized(aiohttp_client_fx):

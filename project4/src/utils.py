@@ -38,13 +38,6 @@ def require_auth(class_method: Callable[[Any], Any]) -> Callable[[Any], Any]:
     return wrapper
 
 
-async def get_request_json(request: web_request.Request) -> Optional[dict]:
-    try:
-        return await request.json()
-    except JSONDecodeError:
-        return None
-
-
 def get_password_hash(password: str, salt_length: int = 32) -> bytes:
     salt = os.urandom(salt_length)
     return salt + hashlib.pbkdf2_hmac('sha256', password.encode('utf-8'), salt, 100000)

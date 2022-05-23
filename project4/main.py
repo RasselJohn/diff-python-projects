@@ -2,7 +2,6 @@ import asyncio
 from os import environ
 
 from aiohttp import web
-from pymongo import database, MongoClient
 from motor.motor_asyncio import AsyncIOMotorClient
 from src.urls import urls
 

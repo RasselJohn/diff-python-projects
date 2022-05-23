@@ -3,8 +3,8 @@ POST http://localhost:8080/registration
 Content-Type: application/json
 
 {
-  "login": "john5",
-  "password": "password5"
+  "login": "john2",
+  "password": "password2"
 }
 
 ### login
@@ -12,41 +12,43 @@ POST http://localhost:8080/login
 Content-Type: application/json
 
 {
-  "login": "john5",
-  "password": "password5"
+  "login": "john2",
+  "password": "password2"
 }
 
 ### create item (entity) - all fields in json will be added to 'data' field in entity
 POST http://localhost:8080/items/new
-Authorization: 860e4f35-e428-4364-a1c2-6f180c04dce8
+Authorization: 4903aa66-daec-4b83-a964-ec6371b2ae7f
 Content-Type: application/json
 
 {
-  "any_data": "john",
-  "any_data2": "john2"
+  "data": {
+    "any_data": "123john555",
+    "any_data2": "123john5552"
+  }
 }
 
 ### list of items
 GET http://localhost:8080/items
-Authorization: 860e4f35-e428-4364-a1c2-6f180c04dce8
+Authorization: 4903aa66-daec-4b83-a964-ec6371b2ae7f
 
 
 ### remove item
-DELETE http://localhost:8080/items/6050b7256f273b00b28828ba
-Authorization: 860e4f35-e428-4364-a1c2-6f180c04dce8
+DELETE http://localhost:8080/items/628b8a716937181e17a11e6a
+Authorization: 1def20f2-4003-46f3-bdb3-1c7ebdc4ad25
 Content-Type: application/json
 
 ### send item
 POST http://localhost:8080/send
-Authorization: 860e4f35-e428-4364-a1c2-6f180c04dce8
+Authorization: 4903aa66-daec-4b83-a964-ec6371b2ae7f
 Content-Type: application/json
 
 {
   "new_owner": "john2",
-  "item_id": "6050b78783c47356514d3450"
+  "item_id": "628b8afd6937181e17a11e6e"
 }
 
 ### receive transfer item
-GET http://localhost:8080/get?link_id=6050bcdf7b6b8cad03e284c9
-Authorization: 14b71d88-fed6-4f06-aa6a-18f6f7b0f60e
+GET http://localhost:8080/get?link_id=628b8b116937181e17a11e6f
+Authorization: ff8419ba-bc39-4da0-9218-cbf3c2838f0e
 Content-Type: application/json

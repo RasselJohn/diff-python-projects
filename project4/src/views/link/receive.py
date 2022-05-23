@@ -38,4 +38,4 @@ class ReceiveLinkView(web.View):
 
         # remove used link
         await links.delete_one({'_id': ObjectId(link_id)})
-        return web.json_response({'message': 'Object was received.'}, status=HTTPStatus.OK)
+        return web.json_response({'message': 'Object was received.'})

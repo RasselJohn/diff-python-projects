@@ -21,6 +21,6 @@ services:
     command: "python main.py"
 
   mongo_db:
-    image: mongo
+    image: mongo:4.4.14
     ports:
       - "27017:27017"

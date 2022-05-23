@@ -22,4 +22,4 @@ class RemoveEntityView(web.View):
             )
 
         await entities.delete_one(filter_params)
-        return web.json_response({'message': "Item was removed."}, status=HTTPStatus.OK)
+        return web.json_response({'message': "Item was removed."})

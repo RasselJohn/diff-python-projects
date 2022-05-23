@@ -3,30 +3,23 @@ from http import HTTPStatus
 from typing import Optional
 from uuid import uuid4
 
-from motor.motor_asyncio import AsyncIOMotorCollection
 from aiohttp import web
+from motor.motor_asyncio import AsyncIOMotorCollection
 
 from src.enums import DbCollection
-from src.utils import get_request_json, check_password_hash
+from src.models import AuthModel
+from src.utils import check_password_hash
 
 
 class LoginView(web.View):
     async def post(self) -> web.Response:
-        data: Optional[dict] = await get_request_json(self.request)
-        if not data:
-            return web.json_response(
-                {'error': 'Params were not received or had incorrect format.'},
-                status=HTTPStatus.UNAUTHORIZED
-            )
-
-        login, password = data.get('login'), data.get('password')
-        if not login or not password:
-            return web.json_response({'error': 'Login or password absent.'}, status=HTTPStatus.UNAUTHORIZED)
+        data: AuthModel = await AuthModel.parse_request(self.request)
+        login, password = data.login, data.password
 
         users_collection: AsyncIOMotorCollection = self.request.app.get('MONGO_DB')[DbCollection.USER]
         user: Optional[dict] = await users_collection.find_one({'login': login})
-        if not user or not check_password_hash(user.get('password'), password):
-            return web.json_response({'error': f'Incorrect auth data.'}, status=HTTPStatus.UNAUTHORIZED)
+        if not user or not check_password_hash(user.get('password'), password.get_secret_value()):
+            return web.json_response({'error': 'Incorrect auth data.'}, status=HTTPStatus.UNAUTHORIZED)
 
         # auth token is just uuid4
         token = str(uuid4())
@@ -41,4 +34,4 @@ class LoginView(web.View):
             upsert=True
         )
 
-        return web.json_response({'token': token}, status=HTTPStatus.OK)
+        return web.json_response({'token': token})

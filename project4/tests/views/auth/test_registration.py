@@ -1,7 +1,6 @@
 from http import HTTPStatus
 
 from aiohttp.web_response import Response
-from motor.motor_asyncio import AsyncIOMotorDatabase
 
 from src.enums import DbCollection
 
@@ -39,8 +38,10 @@ async def test_register_absent_password(aiohttp_client_fx):
     assert response.status == HTTPStatus.BAD_REQUEST
 
     response_data: dict = await response.json()
-    assert 'error' in response_data
-    assert response_data.get('error') == 'Login or password absent.'
+    assert isinstance(response_data, list)
+    assert len(response_data) == 1
+    assert response_data[0]['loc'][0] == 'password'
+    assert response_data[0]['msg'] == 'field required'
 
 
 async def test_register_incorrect_request_data(aiohttp_client_fx):

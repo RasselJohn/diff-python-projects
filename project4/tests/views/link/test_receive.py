@@ -29,7 +29,8 @@ async def test_link_receive_success(
 
     assert response.status == HTTPStatus.OK
     assert 'message' in await response.json()
-    assert await aio_db_fx[DbCollection.LINK].count_documents({'new_owner': user_fx.get('login'), 'entity_id': entity_id}) == 0
+    assert await aio_db_fx[DbCollection.LINK].count_documents(
+        {'new_owner': user_fx.get('login'), 'entity_id': entity_id}) == 0
     assert await aio_db_fx[DbCollection.ENTITY].count_documents({'login': old_owner}) == 0
     assert await aio_db_fx[DbCollection.ENTITY].count_documents({'login': user_fx.get('login')}) == 1
 
