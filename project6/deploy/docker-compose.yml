@@ -9,17 +9,20 @@ services:
     command: [ "/bin/bash", "/app/web_run.sh" ]
 
     environment:
+      - REDIS=redis://redis:6379/0
       - EXPOSE_PORT=8880
 
   web-1:
     <<: *fast-api
     environment:
+      - REDIS=redis://redis:6379/0
       - EXPOSE_PORT=8881
 
 
   web-2:
     <<: *fast-api
     environment:
+      - REDIS=redis://redis:6379/0
       - EXPOSE_PORT=8882
 
   nginx:
@@ -28,6 +31,8 @@ services:
       dockerfile: deploy/nginx/Dockerfile
     ports:
       - 8400:8400
+      - 8401:8400
+      - 8402:8400
     depends_on:
       - web-0
       - web-1

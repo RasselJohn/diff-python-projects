@@ -1,27 +1,39 @@
+import os
 from uuid import uuid4
 
-from starlette.websockets import WebSocket
+from redis import asyncio as aioredis
 
 
 class ConnectionManager:
-    def __init__(self):
-        self.sessions = {}
-        self.active_connections: dict[str, WebSocket] = {}  # {client_id: ws}
+    # without 'await'
+    _redis = aioredis.from_url(os.environ['REDIS'])
 
-    async def connect(self, ws: WebSocket, client_id):
-        if client_id in self.active_connections:
+    async def get_session(self, client_id: str) -> str:
+        prev_session = await self._redis.get(client_id)
+        if prev_session is not None:
             print(f'{client_id=} already exists. Old connection will be closed.')
-            await self.active_connections[client_id].close()
 
-        await ws.accept()
-        self.active_connections[client_id] = ws
+        new_session = str(uuid4())
+        await self._redis.set(client_id, new_session)
+        print(f'Session {new_session=} started.')
 
-    def disconnect(self, client_id):
-        del self.active_connections[client_id]
+        return new_session
 
-    async def set_session(self, ws: WebSocket, client_id):
-        session_id = str(uuid4())
-        self.sessions[client_id] = session_id
-        await ws.send_text(f'{session_id}')
+    # check that curr session is active
+    async def is_active_session(self, client_id, session):
+        actual_session = await self._redis.get(client_id)
+        return actual_session and actual_session.decode() == session
 
-        print(f'Session {session_id=} started.')
+    async def get_all_sessions(self):
+        keys = await self._redis.keys()
+        values = await self._redis.mget(keys)  # keys are ordered
+        return (' '.join((k.decode(), v.decode())) for k, v in zip(keys, values))
+
+    async def clean(self, client_id, session):
+        is_active_session: bool = await self.is_active_session(client_id, session)
+
+        # if another new session with the same client_id does not exists
+        if is_active_session:
+            await self._redis.delete(client_id)
+
+        print(f'Session for {session=} finished...')
