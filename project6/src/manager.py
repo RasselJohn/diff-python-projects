@@ -46,6 +46,6 @@ class ConnectionManager:
             # if another new session with the same client_id does not exists
             is_active_session: bool = await self._is_active_session(redis_transaction, client_id, session)
             if is_active_session:
-                await self._redis.delete(client_id)
+                await redis_transaction.delete(client_id)
 
         print(f'Session for {session=} finished...')
