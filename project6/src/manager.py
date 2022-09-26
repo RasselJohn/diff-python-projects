@@ -34,6 +34,7 @@ class ConnectionManager:
         return (' '.join((k.decode(), v.decode())) for k, v in zip(keys, values))
 
     async def clean(self, client_id, session):
+        self._redis.pipeline()
         async with self._redis.pipeline(transaction=True) as redis_transaction:
             await redis_transaction.watch(client_id)
 
@@ -42,6 +43,7 @@ class ConnectionManager:
                 client_id, session, redis_transaction=redis_transaction
             )
             if is_active_session:
+                await redis_transaction.multi()
                 await redis_transaction.delete(client_id)
 
             await redis_transaction.execute()
