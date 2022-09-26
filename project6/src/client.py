@@ -24,7 +24,7 @@ async def handler(host: str, client_id: str):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='WS client.')
-    parser.add_argument('--endpoint', dest='url', default='ws://localhost:8400')
+    parser.add_argument('--endpoint', dest='url', default='ws://localhost:8880')
     parser.add_argument('--client-id', dest='client_id', default='test1')
     args = parser.parse_args()
     asyncio.run(handler(args.url, args.client_id))
